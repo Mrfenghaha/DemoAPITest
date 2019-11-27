@@ -1,0 +1,5 @@
+# 邮箱配置
+server: xxx.xxx.xxx
+sender: xxx@xxxxxx.com
+password: xxxxxx
+receiver: ['xxx@xxxxxx.com','xxx@xxxxxx.com']
