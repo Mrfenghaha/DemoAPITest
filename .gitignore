@@ -106,4 +106,4 @@ venv.bak/
 reports/*.html
 logs/*.log
 
-.DS_Store
+*/.DS_Store
