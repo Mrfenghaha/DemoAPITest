@@ -103,7 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-reports/*.html
-logs/*.log
-
+.idea
 */.DS_Store
+reports/*.html
