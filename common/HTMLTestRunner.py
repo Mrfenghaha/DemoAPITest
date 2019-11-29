@@ -661,7 +661,7 @@ class HTMLTestRunner(Template_mixin):
         self.startTime = datetime.datetime.now()
 
     def run(self, test):
-        "Run the given testapi case or testapi suite."
+        "Run the given testapi case or testapi suites."
         result = _TestResult(self.verbosity)
         test(result)
         self.stopTime = datetime.datetime.now()

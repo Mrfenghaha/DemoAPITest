@@ -3,7 +3,7 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
-from common.readConfig import *
+from config.readConfig import *
 
 
 def email_send():

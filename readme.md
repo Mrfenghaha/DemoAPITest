@@ -3,10 +3,9 @@
 
 # 环境准备
 * 首先需要安装python3.x环境（linux系列不需要安装）
-* 安装模块等
-
+* 安装模块库
 ```
-sudo pip3 install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 # 编辑配置文件
@@ -15,11 +14,8 @@ sudo pip3 install -r requirements.txt
 
 # 用例执行说明
 ```
-cd xxxx  # 进入根目录
-python3 runcase.py $suite $name  # 执行用例
-$suite 参数是文件夹路径
-$name 参数是文件名称或all
+python3 runcase.py $suite $name  # 执行用例,$suite文件夹路径,$name文件名称或all
 例：
-python3 runcase.py testcase/api_peso2go test_app_login  # 执行testcase/api_peso2go/test_app_login.py文件
-python3 runcase.py testcase/api_peso2go all  # 执行testcase/api_peso2go文件夹下的所有py文件
+python3 runcase.py testcase/api_test test_login  # 执行testcase/api_test/test_login用例
+python3 runcase.py testcase/api_test all  # 执行testcase/api_test文件夹下的所有用例
 ```
