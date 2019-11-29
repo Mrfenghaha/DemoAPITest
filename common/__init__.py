@@ -1,1 +1,1 @@
-__all__ = ['dataType', 'emailSend', 'HTMLTestRunner', 'logger', 'readConfig', 'runMain']
+__all__ = ['dataType', 'emailSend', 'HTMLTestRunner', 'logger', 'runMain']
