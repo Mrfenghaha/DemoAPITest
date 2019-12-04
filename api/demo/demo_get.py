@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -
-from common.readConfig import *
+from config.readConfig import *
 from common.runMain import RunMain
 
 

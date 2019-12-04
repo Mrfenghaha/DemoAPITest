@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -
-from common.readConfig import *
+from config.readConfig import *
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Column, String, Integer, DateTime, Float
@@ -8,7 +8,8 @@ from sqlalchemy.ext.declarative import declarative_base
 
 # 创建对象的基类:
 Base = declarative_base()
-
+# 创建mysql连接方式
+mysql = "mysql+pymysql://%s:%s@%s:%s" % (mysql_account, mysql_password, mysql_ip, mysql_port)
 
 '''
 codes验证码
