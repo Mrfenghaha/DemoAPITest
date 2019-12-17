@@ -5,7 +5,7 @@ import re
 cur_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 config_path = os.path.join(cur_path, 'config')
 env_info_path = os.path.join(config_path, 'env.yaml')
-env_path = os.path.join(config_path, 'env')
+env_path = os.path.join(config_path, 'envConfig')
 
 
 def get_env_list():
