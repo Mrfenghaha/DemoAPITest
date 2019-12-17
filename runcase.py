@@ -5,6 +5,7 @@ import time
 import unittest
 from common.HTMLTestRunner import HTMLTestRunner
 from common.emailSend import email_send
+from config.envSpecify import env_specify
 # from tomorrow import threads
 
 
@@ -51,8 +52,10 @@ def run_api(all_api):
 
 
 if __name__ == "__main__":
-    suite = sys.argv[1]
-    name = sys.argv[2]
+    env = sys.argv[1]
+    suite = sys.argv[2]
+    name = sys.argv[3]
+    env_specify(env)
     all_api = add_api(suite, name)
     run_api(all_api)
     email_send()

@@ -8,14 +8,18 @@
 pip3 install -r requirements.txt
 ```
 
-# 编辑配置文件
+## 编辑配置文件
+### 配置邮件发送
 * 编辑config/email.yaml文件,用于测试报告邮件发送
-* 编辑config/env.yaml文件,用于数据库连接、host设置
+### 配置env环境参数
+* 编辑config/env/envDev.yaml文件,用于开发环境数据库连接、host设置
+* 编辑config/env/envSt.yaml文件,用于测试环境数据库连接、host设置
+* 可以添加更多环境，直接添加相应的envXx.yaml文件即可，运行用例是使用Xx作为参数即可 
 
 # 用例执行说明
 ```
-python3 runcase.py $suite $name  # 执行用例,$suite文件夹路径,$name文件名称或all
+python3 runcase.py $env $suite $name  # 在$env环境下,执行用例,$suite文件夹路径,$name文件名称或all
 例：
-python3 runcase.py testcase/api_test test_login  # 执行testcase/api_test/test_login用例
-python3 runcase.py testcase/api_test all  # 执行testcase/api_test文件夹下的所有用例
+python3 runcase.py Dev testcase/api_test test_login  # 在开发环境下，执行testcase/api_test/test_login用例
+python3 runcase.py St testcase/api_test all  # 在测试环境下，执行testcase/api_test文件夹下的所有用例
 ```
