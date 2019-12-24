@@ -22,6 +22,11 @@ def email_send():
     mail_body = f.read()
     f.close()
 
+    email_sender = email_info['email_sender']
+    email_receiver = email_info['email_receiver']
+    email_server = email_info['email_server']
+    email_password = email_info['email_password']
+
     msg = MIMEText(mail_body, 'html', 'utf-8')
     msg['From'] = email_sender
     msg['To'] = ','.join(email_receiver)   # 多人时,receiver使用数组,并转换;单人时直接书写即可

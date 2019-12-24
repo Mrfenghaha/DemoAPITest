@@ -18,11 +18,11 @@ if not os.path.exists(config_path):
 # 如果没有config/email.yaml,自动创建并写入默认值
 if not os.path.exists(email_info_path):
     with open(email_info_path, 'w', encoding='utf-8') as file:
-        file.write("# 邮箱配置\n"
-                   "server: xxx.xxx.xxx\n"
-                   "sender: xxx@xxxxxx.com\n"
-                   "password: xxxxxx\n"
-                   "receiver: ['xxx@xxxxxx.com','xxx@xxxxxx.com']")
+        file.write("# 邮箱配置\nemail_info:\n"
+                   "  server: xxx.xxx.xxx\n"
+                   "  sender: xxx@xxxxxx.com\n"
+                   "  password: xxxxxx\n"
+                   "  receiver: ['xxx@xxxxxx.com','xxx@xxxxxx.com']")
     file.close()
 
 
@@ -31,22 +31,14 @@ with open(email_info_path, 'r', encoding='utf-8') as file:
     email_info = yaml.full_load(file)
     file.close()
 
-email_server = email_info['server']
-
-email_sender = email_info['sender']
-
-email_password = email_info['password']
-
-email_receiver = email_info['receiver']
+email_info = email_info['email_info']
 
 # 如果没有config/env.yaml,自动创建并写入默认值
 if not os.path.exists(env_info_path):
     with open(env_info_path, 'w', encoding='utf-8') as file:
         file.write('# host环境IP\nhost: http://xxx.xx.x.xx\n'
-                   '# mysql服务信息\nmysql_ip: xxxx\n'
-                   'mysql_port: 3306\n'
-                   'mysql_account: xxxx\n'
-                   'mysql_password: xxxx\n')
+                   '# mysql服务信息\nmysql_info:\n  ip:xxxx\n  port: 3306\n  account: xxxx\n  password: xxxx\n'
+                   '# mongodb服务信息\nmongodb_info:\n  ip:xxxx\n  port: 3306\n  account: xxxx\n  password: xxxx\n')
     file.close()
 
 
@@ -56,11 +48,7 @@ with open(env_info_path, 'r', encoding='utf-8') as file:
     file.close()
 # host地址
 host = env_info['host']
-# 数据库IP
-mysql_ip = env_info['mysql_ip']
-# 数据库端口号
-mysql_port = env_info['mysql_port']
-# 数据库账号
-mysql_account = env_info['mysql_account']
-# 数据库密码
-mysql_password = env_info['mysql_password']
+# mysql信息
+mysql_info = env_info['mysql_info']
+# mongodb信息
+mongodb_info = env_info['mongodb_info']

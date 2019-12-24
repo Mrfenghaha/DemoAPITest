@@ -1,7 +1,0 @@
-# host环境IP
-host: http://xxx.xx.x.xx
-# mysql服务信息
-mysql_ip: xxxx
-mysql_port: 3306
-mysql_account: xxxx
-mysql_password: xxxx

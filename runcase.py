@@ -5,7 +5,7 @@ import time
 import unittest
 from common.HTMLTestRunner import HTMLTestRunner
 from common.emailSend import email_send
-from config.envSpecify import env_specify
+from common.envSpecify import env_specify
 # from tomorrow import threads
 
 

@@ -3,4 +3,5 @@ numpy
 requests
 PyYAML>=5.1.1
 PyMySQL
+pymongo
 SQLAlchemy

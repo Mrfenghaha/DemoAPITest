@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -
 import pytz
 import time
-from data.mysql.mysql_func import *
+import datetime
 
 
 class Data:
