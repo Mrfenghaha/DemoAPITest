@@ -21,7 +21,7 @@ res_path = os.path.join(cur_path, "result")
 
 def add_api(suite, name):
     # 指定测试目录
-    case_path = os.path.join(cur_path, "testcase/" + suite)
+    case_path = os.path.join(cur_path, "tests/testcase/" + suite)
     if name == 'all':
         # 定义测试目录为指定目录
         discover = unittest.defaultTestLoader.discover(case_path, pattern="*.py", top_level_dir=None)
