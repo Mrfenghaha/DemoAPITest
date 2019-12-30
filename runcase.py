@@ -11,6 +11,7 @@ from common.envSpecify import env_specify
 
 # 当前脚本所在的文件绝对路径
 cur_path = os.path.dirname(os.path.realpath(__file__))
+res_path = os.path.join(cur_path, "result")
 
 
 # 将当前路径设置为python的临时环境变量，用于命令执行
@@ -37,7 +38,7 @@ def run_api(all_api):
 
     # 指定报告存储位置以及报告名称
     now = time.strftime("%Y-%m-%d-%H-%M-%S")
-    report_path = os.path.join(cur_path, "reports")
+    report_path = os.path.join(res_path, "reports")
     # 如果没有reports文件就创建一个文件
     if not os.path.exists(report_path):
         os.mkdir(report_path)

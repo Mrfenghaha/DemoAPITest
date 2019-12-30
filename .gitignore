@@ -105,4 +105,5 @@ venv.bak/
 
 .idea
 */.DS_Store
-reports/*.html
+result/
+config/env.yaml

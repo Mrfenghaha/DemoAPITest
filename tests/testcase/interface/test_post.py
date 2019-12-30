@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -
 import unittest
-from time import sleep
 
-from api.demo.demo_post import DemoPost
+from tests.api import demoPost
 from data.data_create.data_create import Data
 
 
@@ -19,7 +18,7 @@ class Test(unittest.TestCase):
         phone = data['phone']
         password = '123456'
 
-        result = DemoPost().demo_post(phone, password)
+        result = demoPost.demo_post(phone, password)
         self.assertEqual(result["success"], True)
 
     def test_case02(self):
@@ -29,7 +28,7 @@ class Test(unittest.TestCase):
         phone = ''
         password = data['password']
 
-        result = DemoPost().demo_post(phone, password)
+        result = demoPost.demo_post(phone, password)
         self.assertEqual(result["success"], False)
         self.assertEqual(result["err_msg"], 'params validate error')
 

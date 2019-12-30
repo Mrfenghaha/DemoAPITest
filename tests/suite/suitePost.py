@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -
-from api.demo.demo_post import DemoPost
+from tests.api import demoPost
 
 
 def suite_post(data):
@@ -7,5 +7,5 @@ def suite_post(data):
     password = data['password']
 
     # 发起登录
-    login = DemoPost().demo_post(phone, password)
+    login = demoPost.demo_post(phone, password)
     return login
