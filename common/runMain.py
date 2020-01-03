@@ -1,55 +1,85 @@
 # -*- coding: utf-8 -
 import json
 import requests
+from urllib3 import encode_multipart_formdata
+from locust import TaskSet
 from common.logger import Log
 
 
+class SendRequest:
+
+    def send_get_request(self, method, url, headers, data):
+        # 执行get请求
+        result = requests.get(url=url, data=json.dumps(data), headers=headers).json()
+        # 执行封装的打印方法，进行固定格式的结果打印
+        Print(method, url, headers, data, result).format()
+        return result
+
+    def send_post_request(self, method, url, headers, data):
+        # 执行get请求
+        result = requests.post(url=url, data=json.dumps(data), headers=headers).json()
+        # 执行封装的打印方法，进行结果打印
+        Print(method, url, headers, data, result).format()
+        return result
+
+    def send_post_file_request(self, method, url, headers, data):
+        # 文件转化为二进制流
+        encode_data = encode_multipart_formdata(data)
+        new_headers = dict({'content-type': encode_data[1]}, **headers)
+        new_data = encode_data[0]
+
+        # 执行get请求
+        result = requests.post(url=url, headers=new_headers, data=new_data).json()
+        # 执行封装的打印方法，进行固定格式的结果打印
+        Print(method, url, headers, data, result).format()
+        return result
+
+
+class RunLocust(TaskSet):
+
+    def run_get_locust(self, url, headers, data):
+        # 执行get请求
+        result = self.client.get(url=url, data=json.dumps(data), headers=headers).json()
+        return result
+
+    def run_post_locust(self, url, headers, data):
+        # 执行get请求
+        result = self.client.post(url=url, data=json.dumps(data), headers=headers).json()
+        return result
+
+
 # 封装requests请求，将使用到的所有requests请求统一封装调用,并打印美化格式的结果
-class RunMain:
+class RunMain(RunLocust, SendRequest):
 
-    def __init__(self, method, url, headers, data):
-        self.method = method
-        self.url = url
-        self.headers = headers
-        self.data = data
+    def sendRequest(self, parm):
+        method = parm['method']
+        url = parm['url']
+        headers = parm['headers']
+        data = parm['data']
 
-    def send_get(self):
-        # 执行get请求,并打印固定格式的执行内容、结果
-        result = requests.get(url=self.url, data=json.dumps(self.data), headers=self.headers).json()
-
-        # 执行封装的打印方法，进行结果打印
-        Print('get', self.url, self.headers, self.data, result).format()
-
-        return result
-
-    def send_post(self):
-        # 执行get请求,并打印固定格式的执行内容、结果
-        result = requests.post(url=self.url, data=json.dumps(self.data), headers=self.headers).json()
-
-        # 执行封装的打印方法，进行结果打印
-        Print('post', self.url, self.headers, self.data, result).format()
-
-        return result
-
-    def send_post_file(self):
-        # 执行get请求,并打印固定格式的执行内容、结果
-        result = requests.post(url=self.url, headers=self.headers, data=self.data).json()
-
-        # 执行封装的打印方法，进行结果打印
-        Print('post_file', self.url, self.headers, self.data, result).format()
-
-        return result
-
-    def run_main(self):
-        if self.method == 'get':
-            result = self.send_get()
-        elif self.method == 'post':
-            result = self.send_post()
-        elif self.method == 'post_file':
-            result = self.send_post_file()
+        if method == "get" or "GET":
+            return self.send_get_request(method, url, headers, data)
+        elif method == "post" or "POST":
+            return self.send_post_request(method, url, headers, data)
+        elif method == "post_file" or "POST_FILE":
+            return self.send_post_file_request(method, url, headers, data)
         else:
-            print("method值错误！！！")
-        return result
+            print("method值错误或暂时不支持！！！")
+            quit()
+
+    def runLocust(self, parm):
+        method = parm['method']
+        url = parm['url']
+        headers = parm['headers']
+        data = parm['data']
+
+        if method == "get" or "GET":
+            return self.run_get_locust(url, headers, data)
+        elif method == "post" or "POST":
+            return self.send_post_locust(url, headers, data)
+        else:
+            print("method值错误或暂时不支持！！！")
+            quit()
 
 
 # 配置打印格式即美化、打印内容,同时完整的结果输出有利于报告的详细程度(就不再需要打log,报告内容是根据执行结果完成的)

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -
 import unittest
-
+from common.runMain import RunMain
 from tests.api import demoPost
 from data.data_create.data_create import Data
 
 
-class Test(unittest.TestCase):
+class Test(unittest.TestCase, RunMain):
 
     def setUp(self):
         print('-----start-----')
@@ -17,8 +17,7 @@ class Test(unittest.TestCase):
         # 准备数据
         phone = data['phone']
         password = '123456'
-
-        result = demoPost.demo_post(phone, password)
+        result = self.sendRequest(demoPost.demo_post(phone, password))
         self.assertEqual(result["success"], True)
 
     def test_case02(self):
@@ -27,8 +26,7 @@ class Test(unittest.TestCase):
         # 准备数据
         phone = ''
         password = data['password']
-
-        result = demoPost.demo_post(phone, password)
+        result = self.sendRequest(demoPost.demo_post(phone, password))
         self.assertEqual(result["success"], False)
         self.assertEqual(result["err_msg"], 'params validate error')
 
