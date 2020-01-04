@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -
-import os
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
-from config.readConfig import *
+from common.readConfig import *
 
 
 def email_send():

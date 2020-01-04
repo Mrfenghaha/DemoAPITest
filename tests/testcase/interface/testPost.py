@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -
 import unittest
-from common.runMain import RunMain
+from common.runMain import SendRequest
 from tests.api import demoPost
 from data.data_create.data_create import Data
 
 
-class Test(unittest.TestCase, RunMain):
+class Test(unittest.TestCase, SendRequest):
 
     def setUp(self):
         print('-----start-----')

@@ -12,7 +12,9 @@ from common.envSpecify import env_specify
 # 当前脚本所在的文件绝对路径
 cur_path = os.path.dirname(os.path.realpath(__file__))
 res_path = os.path.join(cur_path, "result")
-
+# 如果不存在result文件夹，就自动创建一个
+if not os.path.exists(res_path):
+    os.mkdir(res_path)
 
 # 将当前路径设置为python的临时环境变量，用于命令执行
 # 需要设置是因为项目存在多处相互调用
@@ -59,4 +61,4 @@ if __name__ == "__main__":
     env_specify(env)
     all_api = add_api(suite, name)
     run_api(all_api)
-    email_send()
+    # email_send()

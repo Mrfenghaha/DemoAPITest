@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -
 from locust import HttpLocust, task
-from common.runMain import RunMain
-from config.readConfig import *
+from common.runMain import RunLocust
+from common.readConfig import *
 from tests.api import demoGet, demoPost
 
 
-class TestLocust(RunMain):
+class TestLocust(RunLocust):
 
     def on_start(self):
         print('开始性能测试')
@@ -24,4 +24,4 @@ class Query(HttpLocust):
     task_set = TestLocust
     min_wait = 1000
     max_wait = 3000
-    host = "https://www.csdn.net"
+    host = host
