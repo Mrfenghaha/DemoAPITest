@@ -18,7 +18,7 @@ class Test(unittest.TestCase, RunMain):
         phone = data['phone']
         password = '123456'
         result = self.sendRequest(demoPost.demo_post(phone, password))
-        self.assertEqual(result["success"], True)
+        self.assertEqual(result.json()["success"], True)
 
     def test_case02(self):
         """异常数据-手机号码为空-登陆失败"""
@@ -27,8 +27,8 @@ class Test(unittest.TestCase, RunMain):
         phone = ''
         password = data['password']
         result = self.sendRequest(demoPost.demo_post(phone, password))
-        self.assertEqual(result["success"], False)
-        self.assertEqual(result["err_msg"], 'params validate error')
+        self.assertEqual(result.json()["success"], False)
+        self.assertEqual(result.json()["err_msg"], 'params validate error')
 
     def tearDown(self):
         pass

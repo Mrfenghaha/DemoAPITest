@@ -10,16 +10,18 @@ class TestLocust(RunMain):
     def on_start(self):
         print('开始性能测试')
 
-    @task
-    def test_locust(self):
+    def test_demo_post(self):
         phone = "1234567890"
         password = "password"
-        self.runLocust(demoGet.demo_get())
         self.runLocust(demoPost.demo_post(phone, password))
+
+    @task
+    def test_demo_get(self):
+        self.runLocust(demoGet.demo_get())
 
 
 class Query(HttpLocust):
     task_set = TestLocust
     min_wait = 1000
     max_wait = 3000
-    host = host
+    host = "https://www.csdn.net"

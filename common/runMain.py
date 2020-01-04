@@ -4,20 +4,21 @@ import requests
 from urllib3 import encode_multipart_formdata
 from locust import TaskSet
 from common.logger import Log
+from config.readConfig import *
 
 
 class SendRequest:
 
     def send_get_request(self, method, url, headers, data):
         # 执行get请求
-        result = requests.get(url=url, data=json.dumps(data), headers=headers).json()
+        result = requests.get(url=url, data=json.dumps(data), headers=headers)
         # 执行封装的打印方法，进行固定格式的结果打印
         Print(method, url, headers, data, result).format()
         return result
 
     def send_post_request(self, method, url, headers, data):
         # 执行get请求
-        result = requests.post(url=url, data=json.dumps(data), headers=headers).json()
+        result = requests.post(url=url, data=json.dumps(data), headers=headers)
         # 执行封装的打印方法，进行结果打印
         Print(method, url, headers, data, result).format()
         return result
@@ -29,7 +30,7 @@ class SendRequest:
         new_data = encode_data[0]
 
         # 执行get请求
-        result = requests.post(url=url, headers=new_headers, data=new_data).json()
+        result = requests.post(url=url, headers=new_headers, data=new_data)
         # 执行封装的打印方法，进行固定格式的结果打印
         Print(method, url, headers, data, result).format()
         return result
@@ -39,12 +40,12 @@ class RunLocust(TaskSet):
 
     def run_get_locust(self, url, headers, data):
         # 执行get请求
-        result = self.client.get(url=url, data=json.dumps(data), headers=headers).json()
+        result = self.client.get(url=url, data=json.dumps(data), headers=headers)
         return result
 
     def run_post_locust(self, url, headers, data):
         # 执行get请求
-        result = self.client.post(url=url, data=json.dumps(data), headers=headers).json()
+        result = self.client.post(url=url, data=json.dumps(data), headers=headers)
         return result
 
 
@@ -53,7 +54,7 @@ class RunMain(RunLocust, SendRequest):
 
     def sendRequest(self, parm):
         method = parm['method']
-        url = parm['url']
+        url = host + parm['url']
         headers = parm['headers']
         data = parm['data']
 
