@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -
 import unittest
 from common.runMain import SendRequest
+from data.data_create import DataCreate
 from tests.api import demoPost
-from data.data_create.data_create import Data
 
 
 class Test(unittest.TestCase, SendRequest):
@@ -13,7 +13,7 @@ class Test(unittest.TestCase, SendRequest):
     # unittest执行测试必须以test开头
     def test_case01(self):
         """正常数据-密码登录-登陆成功"""
-        data = Data().data_create()
+        data = DataCreate().data_create()
         # 准备数据
         phone = data['phone']
         password = '123456'

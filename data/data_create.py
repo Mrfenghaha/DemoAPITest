@@ -2,9 +2,10 @@
 import pytz
 import time
 import datetime
+from data.dataCreate import custom
 
 
-class Data:
+class DataCreate:
 
     def data_create(self):
         a = {
@@ -17,6 +18,9 @@ class Data:
 
         return a
 
+    def custom(self):
+        return custom.custom()
+
 
 if __name__ == "__main__":
-    Data().data_create()
+    DataCreate().data_create()
