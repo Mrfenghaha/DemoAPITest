@@ -19,6 +19,8 @@ class WebsiteUser(HttpLocust):
     min_wait = 3000
     # 执行事务之间用户等待时间的上界（单位：毫秒）
     max_wait = 6000
+    # 设置 Locust 多少秒后超时，如果为 None ,则不会超时。
+    stop_timeout = 5
 
 
 '''

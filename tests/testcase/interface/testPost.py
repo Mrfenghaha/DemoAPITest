@@ -15,20 +15,18 @@ class Test(unittest.TestCase, SendRequest):
         """正常数据-密码登录-登陆成功"""
         data = DataCreate().data_create()
         # 准备数据
-        phone = data['phone']
-        password = '123456'
-        result = self.sendRequest(demoPost.demo_post(phone, password))
+        page_num, num = data['page_num'], data['num']
+        result = self.sendRequest(demoPost.demo_post(page_num, num))
         self.assertEqual(result.json()["success"], True)
 
     def test_case02(self):
         """异常数据-手机号码为空-登陆失败"""
-        data = Data().data_create()
+        data = DataCreate().data_create()
         # 准备数据
-        phone = ''
-        password = data['password']
-        result = self.sendRequest(demoPost.demo_post(phone, password))
+        page_num, num = "", data['num']
+        result = self.sendRequest(demoPost.demo_post(page_num, num))
         self.assertEqual(result.json()["success"], False)
-        self.assertEqual(result.json()["err_msg"], 'params validate error')
+        self.assertEqual(result.json()["error_message"], "param is error, param not filled or type error")
 
     def tearDown(self):
         pass

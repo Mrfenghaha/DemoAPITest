@@ -10,12 +10,12 @@ class TestLocust(RunLocust):
     def on_start(self):
         print('开始性能测试')
 
+    @task(2)
     def test_demo_post(self):
-        phone = "1234567890"
-        password = "password"
-        self.runLocust(demoPost.demo_post(phone, password))
+        page_num, num = 10, 1
+        self.runLocust(demoPost.demo_post(page_num, num))
 
-    @task
+    @task(1)
     def test_demo_get(self):
         self.runLocust(demoGet.demo_get())
 

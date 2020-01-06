@@ -39,16 +39,16 @@ class SendRequest:
         return result
 
     def sendRequest(self, parm):
-        method = parm['method']
+        method = str.lower(parm['method'])  # 请求方式全部转化为小写
         url = host + parm['url']
         headers = parm['headers']
         data = parm['data']
 
-        if method == "get" or "GET":
+        if method == "get":
             return self.send_get_request(method, url, headers, data)
-        elif method == "post" or "POST":
+        elif method == "post":
             return self.send_post_request(method, url, headers, data)
-        elif method == "post_file" or "POST_FILE":
+        elif method == "post_file":
             return self.send_post_file_request(method, url, headers, data)
         else:
             print("method值错误或暂时不支持！！！")
@@ -64,20 +64,20 @@ class RunLocust(TaskSet):
         return result
 
     def run_post_locust(self, url, headers, data):
-        # 执行get请求
+        # 执行post请求
         result = self.client.post(url=url, data=json.dumps(data), headers=headers)
         return result
 
     def runLocust(self, parm):
-        method = parm['method']
+        method = str.lower(parm['method'])  # 请求方式全部转化为小写
         url = parm['url']
         headers = parm['headers']
         data = parm['data']
 
-        if method == "get" or "GET":
+        if method == "get":
             return self.run_get_locust(url, headers, data)
-        elif method == "post" or "POST":
-            return self.send_post_locust(url, headers, data)
+        elif method == "post":
+            return self.run_post_locust(url, headers, data)
         else:
             print("method值错误或暂时不支持！！！")
             quit()

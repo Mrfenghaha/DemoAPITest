@@ -4,9 +4,9 @@
 def demo_get():
 
     request = {
-        "url": '/',
-        "method": 'get',
-        "headers": {},
+        "url": "/mock_server/configs/info",
+        "method": "get",
+        "headers": {"content-type": "application/json"},
         "data": {}
     }
 
