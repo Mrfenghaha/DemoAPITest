@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -
-from tests.api import demoPost
+from tests.api import mockServerMockShowLists
 
 
 def suite_post(data):
-    phone = data['phone']
-    password = data['password']
+    page_num, num = data['page_num'], data['num']
 
     # 发起登录
-    login = demoPost.demo_post(phone, password)
+    login = mockServerMockShowLists.mock_show_lists(page_num, num)
     return login

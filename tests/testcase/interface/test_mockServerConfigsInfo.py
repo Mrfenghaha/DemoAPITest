@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -
 import unittest
 from common.runMain import SendRequest
-from tests.api import demoGet
+from tests.api import mockServerConfigsInfo
 
 
 class Test(unittest.TestCase, SendRequest):
@@ -12,12 +12,12 @@ class Test(unittest.TestCase, SendRequest):
     # unittest执行测试必须以test开头
     def test_case01(self):
         """测试登录1"""
-        result = self.sendRequest(demoGet.demo_get())
+        result = self.sendRequest(mockServerConfigsInfo.configs_info())
         self.assertEqual(result.status_code, 200)
 
     def test_case02(self):
         """测试登录2"""
-        result = self.sendRequest(demoGet.demo_get())
+        result = self.sendRequest(mockServerConfigsInfo.configs_info())
         self.assertEqual(result.status_code, 200)
 
     def tearDown(self):
