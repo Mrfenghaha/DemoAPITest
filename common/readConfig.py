@@ -16,15 +16,15 @@ class ReadConfigFile:
         return content
 
 
-email_info = ReadConfigFile(email_yaml_path).read_yaml_file()
-env_info = ReadConfigFile(env_yaml_path).read_yaml_file()
+email_content = ReadConfigFile(email_yaml_path).read_yaml_file()
+env_content = ReadConfigFile(env_yaml_path).read_yaml_file()
 
 # 邮箱信息
-email_info = email_info['email_info']
+email_info = email_content['email_info']
 
 # host地址
-host = env_info['host']
+host = env_content['host']
 # mysql信息
-mysql_info = env_info['mysql_info']
+mysql_info = env_content['mysql_info']
 # mongodb信息
-mongodb_info = env_info['mongodb_info']
+mongodb_info = env_content['mongodb_info']
