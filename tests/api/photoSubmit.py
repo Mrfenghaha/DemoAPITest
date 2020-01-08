@@ -9,7 +9,7 @@ def photo_submit(token):
         "url": "/api/photo_submit",
         "method": "post_file",
         "headers": {"token": token},
-        "data": {"upload": ("image.png", open(os.path.join(path, "400k.png"), "rb").read(), "multipart/form-data")}
+        "data": {"upload": ("image.png", open(os.path.join(path, "file.png"), "rb").read(), "multipart/form-data")}
     }
 
     return request
