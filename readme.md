@@ -51,7 +51,7 @@ python3 runcase.py -s api_test -n all
 ```
 clocust -f tests/testcase/locust/test_mostAPI.py
 ```
-通过浏览器访问：http://localhost:8089，设置模拟用户数、每秒产生（启动）的虚拟用户数即可开始测试，可通过Ctrl+C关闭服务
+通过浏览器访问：http://localhost:8089  设置模拟用户数、每秒产生（启动）的虚拟用户数即可开始测试，可通过Ctrl+C关闭服务
 * no-web执行
 ```
 clocust -f tests/testcase/locust/test_mostAPI.py --no-web -c 2 -r 1 -t 3
@@ -63,20 +63,24 @@ clocust -f tests/testcase/locust/test_mostAPI.py --no-web -c 2 -r 1 -t 3
 
 # 框架详细介绍
 
+![](https://github.com/fengyibo963/DemoAPITest/blob/master/docs/%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84.png)
+
 ## 用例分层概念介绍
 该框架分层使用BDD理念（参考HttpRunner的分层理念）
 
-API（接口）：封装接口测试调用的接口
-Suite（动作）：封装动作(行为)（动作：例如登录动作可能调用发送验证码、登录两个接口，但由于仅支持验证码登录，即可将这两个接口一起封装为登录的动作）
-TestCase（用例）：使用动作(行为)拼接工作流，并且对于所有动作可以进行断言
+* API（接口）：封装接口测试调用的接口
+* Suite（动作）：封装动作(行为)（动作：例如登录动作可能调用发送验证码、登录两个接口，但由于仅支持验证码登录，即可将这两个接口一起封装为登录的动作）
+* TestCase（用例）：使用动作(行为)拼接工作流，并且对于所有动作可以进行断言
 
-由于某些接口自身就可以定义为动作，因为TestCase既可以使用动作拼接，也可以使用API进行拼接（或混合拼接）
+由于某些接口自身就可以定义为动作，因为TestCase既可以使用动作拼接，也可以使用API进行拼接（或混合拼接）。
+
 如果为了更好的理解分层，同时增强TestCase脚本的可读性，可以封装所有动作仅使用Suite拼接TestCase（单同时代码量、维护成本会相应的增高）
 
 TestCase拼接为简单关键字驱动模式，使用动作的函数名或类型作为关键字，并且Python语言自身按照顺序执行的机制，达到直接拼接的效果
 
 ## 简单数据驱动介绍
 对于API层所有的接口均进行高度参数化，将请求需要的所有参数进行参数化，这样使得API复用性、维护性提高
+
 所有对于接口的测试场景，仅直接通过不同的测试数据组合实现
 
 ## 数据库操作介绍
@@ -84,13 +88,18 @@ TestCase拼接为简单关键字驱动模式，使用动作的函数名或类型
 
 ## 数据生成器介绍
 接口需要的参数有一些并不能固定设置，例如时间戳、UUID等不可重复参数，或者因为业务需要不能重复的手机号等等参数。
+
 为了做到真正的自动化扩展使用数据生成器，使用生成器按照规则生成想要的数据字典，在编写TestCase的使用直接调用生成器并提取参数即可
 
 ## 性能测试介绍
 Locust是一个很好用并且使用协程而非进程/线程的工具，大大增加了单机并发量。相关学习可[参考](https://blog.csdn.net/baidu_36943075/article/details/102605126)
+
 由于Locust工具的使用简单，只需要测试用例的基础上增加相应的并发设置即可，因此Locust可以直接引用TestCase拼接好的用例
 
 ## 项目结构详细介绍
+
+![](https://github.com/fengyibo963/DemoAPITest/blob/master/docs/%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95.png)
+
 ```
 |-- common      # 基础通用方法，使用过程中基本无需修改（可以二次开发自行拓展）
 |    -- __init__.py  # 所有需要自动创建的文件和默认文件
@@ -104,9 +113,9 @@ Locust是一个很好用并且使用协程而非进程/线程的工具，大大�
 |    -- runMain.py  # 接口请求整体封装
 |-- config
 |    -- email.yaml  # 邮件发送邮箱配置
-|    -- env.yaml  # 环境变量，当存在envXx.yaml文件时该文件仅作为配置数据传输中介不再需要维护，仅维护envXx.yaml文件即可
-|    -- envDev.yaml  # 开发环境配置文件，可以无根据自己需要
-|    -- envSt.yaml  # 测试环境配置文件，可以无根据自己需要
+|    -- env.yaml  # 环境变量
+|    -- envDev.yaml  # 开发环境配置文件，可以根据自己需要添加删除
+|    -- envSt.yaml  # 测试环境配置文件，可以根据自己需要添加删除
 |-- data
 |    -- dataCreate  # 测试数据生成
 |        -- xxxx.py  # 某些特殊数据的生成
