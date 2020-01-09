@@ -39,11 +39,11 @@ optional arguments:
 **执行用例**
 
 ```
-python3 runcase.py -n $env -s $suite -n $name  # 在$env环境下,执行用例,$suite文件夹路径,$name文件名称或all(all即可该用例集下左右用例)
+python3 runcase.py -e $env -s $suite -n $name  # 在$env环境下,执行用例,$suite文件夹路径,$name文件名称或all(all即可该用例集下左右用例)
 例：
 python3 runcase.py -s api_test -n test_login
 python3 runcase.py -s api_test -n all
-python3 runcase.py -s api_test -n all
+python3 runcase.py -e St -s api_test -n all
 ```
 
 **执行性能测试**
