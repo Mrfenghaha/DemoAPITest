@@ -11,7 +11,10 @@ from common.envSpecify import EnvSpecify
 
 def add_api(suite, name):
     # 指定测试目录
-    case_path = os.path.join(cur_path, "tests/testcase/" + suite)
+    if suite is None:
+        case_path = os.path.join(cur_path, "tests/testcase/")
+    else:
+        case_path = os.path.join(cur_path, "tests/testcase/" + suite)
     if name == 'all':
         # 定义测试目录为指定目录
         discover = unittest.defaultTestLoader.discover(case_path, pattern="*.py", top_level_dir=None)
@@ -40,11 +43,11 @@ def run_api(all_api):
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--env', '-e', help='环境变量参数，非必要参数')
-parser.add_argument('--suite', '-s', help='测试用例集名称(tests/testcase/目录下文件名)，必要参数', required=True)
+parser.add_argument('--collection', '-c', help='测试用例集合名称，非必要参数(testcases中用于划分用例集合的文件夹名,当未划分用例集合时不需要)')
 parser.add_argument('--name', '-n', help='测试用例名称，必要参数', required=True)
 args = parser.parse_args()
 if __name__ == "__main__":
     EnvSpecify().specify(args.env)
-    all_api = add_api(args.suite, args.name)
+    all_api = add_api(args.collection, args.name)
     run_api(all_api)
     # EmailSend().email_send()
