@@ -2,7 +2,7 @@
 import unittest
 from common.runMain import SendRequest
 from data.data_create import DataCreate
-from tests.api import mockServerMockShowLists
+from features.apis import mockServerMockShowLists
 
 
 class Test(unittest.TestCase, SendRequest):

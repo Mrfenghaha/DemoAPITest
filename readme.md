@@ -47,9 +47,6 @@ Locust是一个很好用并且使用协程而非进程/线程的工具，大大�
 |-- common      # 基础通用方法，使用过程中基本无需修改（可以二次开发自行拓展）
 |    -- __init__.py  # 所有需要自动创建的文件和默认文件
 |    -- dataType.py  # 字符格式转换,同一封装使用
-|    -- emailSend.py  # 测试执行后的邮件发送配置(收件人配置)
-|    -- envSpecify.py  # env环境切换方法
-|    -- HTMLTestRunner.py  # unittest测试执行生成测试报告的报告文件
 |    -- logger.py  # 功能测试log输出配置
 |    -- loggerLocust.py  # Locust性能测试log输出配置
 |    -- readConfig.py  # 读取环境变量
@@ -71,7 +68,7 @@ Locust是一个很好用并且使用协程而非进程/线程的工具，大大�
 |    -- logs   # 生成的log文件存储位置
 |    -- logsLocust   # 生成的Locust的log文件存储位置
 |    -- reports     # 生成的测试报告存储位置
-|-- tests
+|-- features
 |    -- api
 |        -- xxxx.py  # 该产品某一接口(一个接口一个文件)
 |    -- suites
@@ -83,7 +80,12 @@ Locust是一个很好用并且使用协程而非进程/线程的工具，大大�
 |            -- test_xxx.py  # 测试用例文件
 |    -- locust
 |        -- xxxx.py  # 性能测试脚本文件
-|-- runcase.py     # 通过参数执行任一测试用例或测试用例集
+|-- runcase      # 运行用例的方法
+|    -- emailSend.py  # 测试执行后的邮件发送配置(收件人配置)
+|    -- envSpecify.py  # env环境切换方法
+|    -- HTMLTestRunner.py  # unittest测试执行生成测试报告的报告文件
+|    -- runcase.py     # 通过参数执行任一测试用例或测试用例集
+|-- main.py    # 自动化框架执行入口
 |-- requirements.txt    # 该文件记录所有需要用的框架（以便更换环境一键安装）
 ```
 
@@ -108,8 +110,8 @@ runcase.py脚本为功能测试用例执行统一入口
 
 **查看帮助--help**
 ```
-python3 runcase.py --help
-usage: runcase.py [-h] [--env ENV] [--collection COLLECTION] --name NAME
+python3 main.py --help
+usage: main.py [-h] [--env ENV] [--collection COLLECTION] --name NAME
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -122,11 +124,11 @@ optional arguments:
 **执行用例**
 
 ```
-python3 runcase.py -e $env -c $collection -n $name  # 在$env环境下,执行用例,$collection文件夹路径,$name文件名称或all(all即可该用例集下左右用例)
+python3 main.py -e $env -c $collection -n $name  # 在$env环境下,执行用例,$collection文件夹路径,$name文件名称或all(all即可该用例集下左右用例)
 例：
-python3 runcase.py -c api_test -n test_login
-python3 runcase.py -c api_test -n all
-python3 runcase.py -e St -c api_test -n all
+python3 main.py -c api_test -n test_login
+python3 main.py -c api_test -n all
+python3 main.py -e St -c api_test -n all
 ```
 
 **执行性能测试**

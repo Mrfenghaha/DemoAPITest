@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -
-from tests.api import mockServerMockShowLists
+from features.apis import mockServerMockShowLists
 
 
 def suite_post(data):

@@ -1,45 +1,26 @@
 # -*- coding: utf-8 -
 import gevent.monkey
-gevent.monkey.patch_all()  # python3.6及以上会因为gevent产生无限递归问题，需要添加此方法解决
 import json
 import time
 import requests
 from urllib3 import encode_multipart_formdata
 from locust import TaskSet
-
-from common import *
 from common.readConfig import *
 from common.logger import Log
 from common.loggerLocust import LocustLogger
+gevent.monkey.patch_all()  # python3.6及以上会因为gevent产生无限递归问题，需要添加此方法解决
 
 
 # 封装requests请求，将使用到的所有requests请求统一封装调用,并打印美化格式的结果
 class SendRequest:
-
-    def send_get_request(self, url, headers, data):
-        # 执行get请求
-        result = requests.get(url=url, data=json.dumps(data), headers=headers)
-        # 执行封装的打印方法，进行固定格式的结果打印
-        Print("get", url, headers, data, result).format()
-        return result
-
-    def send_post_request(self, url, headers, data):
-        # 执行get请求
-        result = requests.post(url=url, data=json.dumps(data), headers=headers)
-        # 执行封装的打印方法，进行结果打印
-        Print("post", url, headers, data, result).format()
-        return result
 
     def send_post_file_request(self, url, headers, data):
         # 文件转化为二进制流
         encode_data = encode_multipart_formdata(data)
         new_headers = dict({"content-type": encode_data[1]}, **headers)
         new_data = encode_data[0]
-
-        # 执行get请求
+        # 执行post请求
         result = requests.post(url=url, headers=new_headers, data=new_data)
-        # 执行封装的打印方法，进行固定格式的结果打印
-        Print("post_file", url, headers, data, result).format()
         return result
 
     def sendRequest(self, parm):
@@ -49,30 +30,23 @@ class SendRequest:
         data = parm['data']
 
         if method == "get":
-            return self.send_get_request(url, headers, data)
+            result = requests.get(url=url, data=json.dumps(data), headers=headers)
         elif method == "post":
-            return self.send_post_request(url, headers, data)
+            result = requests.post(url=url, data=json.dumps(data), headers=headers)
         elif method == "post_file":
-            return self.send_post_file_request(url, headers, data)
+            result = self.send_post_file_request(url, headers, data)
         else:
             print("method值错误或暂时不支持！！！")
             quit()
+        # 执行封装的打印方法，进行固定格式的结果打印
+        Print(method, url, headers, data, result).format()
+        return result
 
 
 # 封装locust请求，将使用到的所有locust请求统一封装调用
 class RunLocust(TaskSet):
     logger = LocustLogger(logs_locust_path, '%s.log' % time.strftime('%Y-%m-%d-%H'))
     logger.get_locust_Hook()
-
-    def run_get_locust(self, url, headers, data):
-        # 执行get请求
-        result = self.client.get(url=url, data=json.dumps(data), headers=headers)
-        return result
-
-    def run_post_locust(self, url, headers, data):
-        # 执行post请求
-        result = self.client.post(url=url, data=json.dumps(data), headers=headers)
-        return result
 
     def runLocust(self, parm):
         method = str.lower(parm['method'])  # 请求方式全部转化为小写
@@ -81,12 +55,13 @@ class RunLocust(TaskSet):
         data = parm['data']
 
         if method == "get":
-            return self.run_get_locust(url, headers, data)
+            result = self.client.get(url=url, data=json.dumps(data), headers=headers)
         elif method == "post":
-            return self.run_post_locust(url, headers, data)
+            result = self.client.post(url=url, data=json.dumps(data), headers=headers)
         else:
             print("method值错误或暂时不支持！！！")
             quit()
+        return result
 
 
 # 配置打印格式即美化、打印内容,同时完整的结果输出有利于报告的详细程度(就不再需要打log,报告内容是根据执行结果完成的)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -
 import unittest
 from common.runMain import SendRequest
-from tests.api import mockServerConfigsInfo
+from features.apis import mockServerConfigsInfo
 
 
 class Test(unittest.TestCase, SendRequest):

@@ -24,11 +24,11 @@ class WebsiteUser(HttpLocust):
 
 
 '''
-locust -f tests/locust/sample1.py --host=https://www.baidu.com
+locust -f features/locust/sample1.py --host=https://www.baidu.com
 -f 指定性能测试脚本文件。
 --host 指定被测试应用的URL的地址，注意访问百度使用的HTTPS协议。
 
-locust -f tests/locust/sample1.py --host=https://www.baidu.com --no-web -c 10 -r 2 -t 1m
+locust -f features/locust/sample1.py --host=https://www.baidu.com --no-web -c 10 -r 2 -t 1m
 --no-web 表示不使用Web界面运行测试。
 -c 设置虚拟用户数。
 -r 设置每秒启动虚拟用户数。

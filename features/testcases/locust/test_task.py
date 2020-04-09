@@ -2,7 +2,7 @@
 from locust import HttpLocust, task
 from common.runMain import RunLocust
 from common.readConfig import *
-from tests.api import mockServerConfigsInfo, mockServerMockShowLists
+from features.apis import mockServerConfigsInfo, mockServerMockShowLists
 
 
 class TestLocust(RunLocust):
