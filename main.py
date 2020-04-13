@@ -2,7 +2,7 @@
 import argparse
 from runcase.envSpecify import EnvSpecify
 from runcase.emailSend import EmailSend
-from runcase.runcase import RunCase
+from runcase.runCase import RunCase
 
 
 parser = argparse.ArgumentParser()

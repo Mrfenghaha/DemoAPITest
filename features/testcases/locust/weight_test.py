@@ -2,7 +2,7 @@
 from locust import HttpLocust, task
 from common.runMain import RunLocust
 from common.readConfig import *
-from features.apis import mockServerConfigsInfo, mockServerMockShowLists
+from features.apis import mockServerConfigsInfo_api, mockServerMockShowLists_api
 
 
 class TestLocust(RunLocust):
@@ -12,7 +12,7 @@ class TestLocust(RunLocust):
 
     @task
     def test_demo_get(self):
-        self.runLocust(mockServerConfigsInfo.configs_info())
+        self.runLocust(mockServerConfigsInfo_api.configs_info())
 
 
 class TestLocust2(RunLocust):
@@ -23,7 +23,7 @@ class TestLocust2(RunLocust):
     @task
     def test_demo_post(self):
         page_num, num = 10, 1
-        self.runLocust(mockServerMockShowLists.mock_show_lists(page_num, num))
+        self.runLocust(mockServerMockShowLists_api.mock_show_lists(page_num, num))
 
 
 class QueryOne(HttpLocust):

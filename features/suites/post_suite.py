@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -
-from features.apis import mockServerMockShowLists
+from features.apis import mockServerMockShowLists_api
 
 
 def suite_post(data):
     page_num, num = data['page_num'], data['num']
 
     # 发起登录
-    login = mockServerMockShowLists.mock_show_lists(page_num, num)
+    login = mockServerMockShowLists_api.mock_show_lists(page_num, num)
     return login

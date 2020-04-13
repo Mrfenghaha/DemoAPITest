@@ -61,8 +61,6 @@ Locust是一个很好用并且使用协程而非进程/线程的工具，大大�
 |        -- xxxx.py  # 某些特殊数据的生成
 |    -- dbOperation  # 数据库数据操作  
 |        -- xxxx.py  # 某些数据库操作的封装
-|    -- data_create.py  # 某产品线测试数据生成
-|    -- db_operation.py  # 数据库方法的统一调用入口
 |-- docs
 |-- result
 |    -- logs   # 生成的log文件存储位置
@@ -70,21 +68,21 @@ Locust是一个很好用并且使用协程而非进程/线程的工具，大大�
 |    -- reports     # 生成的测试报告存储位置
 |-- features
 |    -- api
-|        -- xxxx.py  # 该产品某一接口(一个接口一个文件)
+|        -- xxxx_api.py  # 该产品某一接口(一个接口一个文件)
 |    -- suites
-|        --suite_xxxx.py  # 该产品通用封装的模块
+|        -- xxxx_suite.py  # 该产品通用封装的模块
 |    -- testcases
 |        -- func  # 某产品线功能逻辑测试用例
 |        -- interface  # 某产品api测试用例
 |        -- smoke # 某产品冒烟测试用例
-|            -- test_xxx.py  # 测试用例文件
+|            -- xxx_test.py  # 测试用例文件
 |    -- locust
-|        -- xxxx.py  # 性能测试脚本文件
+|        -- xxxx_test.py  # 性能测试脚本文件
 |-- runcase      # 运行用例的方法
 |    -- emailSend.py  # 测试执行后的邮件发送配置(收件人配置)
 |    -- envSpecify.py  # env环境切换方法
-|    -- HTMLTestRunner.py  # unittest测试执行生成测试报告的报告文件
-|    -- runcase.py     # 通过参数执行任一测试用例或测试用例集
+|    -- htmlTestRunner.py  # unittest测试执行生成测试报告的报告文件
+|    -- runCase.py     # 通过参数执行任一测试用例或测试用例集
 |-- main.py    # 自动化框架执行入口
 |-- requirements.txt    # 该文件记录所有需要用的框架（以便更换环境一键安装）
 ```
