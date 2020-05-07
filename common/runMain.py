@@ -35,8 +35,18 @@ class SendRequest:
             result = requests.post(url=url, data=json.dumps(data), headers=headers)
         elif method == "post_file":
             result = self.send_post_file_request(url, headers, data)
+        elif method == "put":
+            result = requests.put(url=url, data=json.dumps(data), headers=headers)
+        elif method == "delete":
+            result = requests.delete(url=url, data=json.dumps(data), headers=headers)
+        elif method == "options":
+            result = requests.options(url=url, data=json.dumps(data), headers=headers)
+        elif method == "head":
+            result = requests.head(url=url, data=json.dumps(data), headers=headers)
+        elif method == "patch":
+            result = requests.patch(url=url, data=json.dumps(data), headers=headers)
         else:
-            print("method值错误或暂时不支持！！！")
+            print("method值错误！！！")
             quit()
         # 执行封装的打印方法，进行固定格式的结果打印
         Print(method, url, headers, data, result).format()
@@ -58,8 +68,23 @@ class RunLocust(TaskSet):
             result = self.client.get(url=url, data=json.dumps(data), headers=headers)
         elif method == "post":
             result = self.client.post(url=url, data=json.dumps(data), headers=headers)
+        elif method == "post_file":
+            encode_data = encode_multipart_formdata(data)  # 文件转化为二进制流
+            new_headers = dict({"content-type": encode_data[1]}, **headers)
+            new_data = encode_data[0]
+            result = self.client.post(url=url, headers=new_headers, data=new_data)
+        elif method == "put":
+            result = self.client.put(url=url, data=json.dumps(data), headers=headers)
+        elif method == "delete":
+            result = self.client.delete(url=url, data=json.dumps(data), headers=headers)
+        elif method == "options":
+            result = self.client.options(url=url, data=json.dumps(data), headers=headers)
+        elif method == "head":
+            result = self.client.head(url=url, data=json.dumps(data), headers=headers)
+        elif method == "patch":
+            result = self.client.patch(url=url, data=json.dumps(data), headers=headers)
         else:
-            print("method值错误或暂时不支持！！！")
+            print("method值错误！！！")
             quit()
         return result
 
@@ -74,7 +99,7 @@ class Print:
         self.request_headers = headers
         self.request_body = data
         self.response = response
-        self.response_code = response.status_code
+        self.response_code = str(response.status_code)
         self.response_headers = response.headers
 
     # 对于部分内容进行格式转换(美化)
@@ -92,7 +117,6 @@ class Print:
     def format(self):
         conversion = self.conversion()
         req_headers, req_body, resp_headers, resp_body = conversion[0], conversion[1], conversion[2], conversion[3]
-        self.log.info(u"调用结果： \n%s" % "URL: " + self.url + "\nRequest Method: " + self.method
-                      + "\nRequest Headers: \n" + req_headers + "\nRequest Body: \n" + req_body
-                      + "\nResponse Status: " + str(self.response_code)
-                      + "\nResponse Headers: \n" + resp_headers + "\nResponse Body: \n" + resp_body)
+        self.log.info(u"调用结果： \nURL: %s\nRequest Method: %s\nRequest Headers:\n%s\nRequest Body:\n%s"
+                      u"\nResponse Status:%s\nResponse Headers:\n%s\nResponse Body:\n%s"
+                      % (self.url, self.method, req_headers, req_body, self.response_code, resp_headers, resp_body))
