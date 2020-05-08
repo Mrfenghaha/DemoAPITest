@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -
 import gevent.monkey
+gevent.monkey.patch_all()  # python3.6及以上会因为gevent产生无限递归问题，需要添加此方法解决，需要在引用requests前patch
 import json
 import time
 import requests
@@ -8,7 +9,6 @@ from locust import TaskSet
 from common.readConfig import *
 from common.logger import Log
 from common.loggerLocust import LocustLogger
-gevent.monkey.patch_all()  # python3.6及以上会因为gevent产生无限递归问题，需要添加此方法解决
 
 
 # 封装requests请求，将使用到的所有requests请求统一封装调用,并打印美化格式的结果
