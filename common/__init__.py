@@ -52,7 +52,7 @@ env_yaml_content = "# host环境IP\nhost: http://xxx.xx.x.xx\n" \
                    "# mongodb服务信息\nmongodb_info:\n  ip: xxxx\n  port: 27017\n  account: xxxx\n  password: xxxx\n"
 
 # 判断以上文件夹是否存在，不存在则创建，并且填充默认值
-yaml_file = [{"path": email_yaml_path, "content": email_yaml_content}, {"path": env_yaml_path,"content": env_yaml_content}]
+yaml_file = [{"path": email_yaml_path, "content": email_yaml_content}, {"path": env_yaml_path, "content": env_yaml_content}]
 for file in yaml_file:
     File(file['path']).create_yaml_file(file['content'])
 
