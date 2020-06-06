@@ -2,7 +2,7 @@
 import time
 import unittest
 from common import *
-from runcase.htmlTestRunner import HTMLTestRunner
+from common.run.htmlTestRunner import HTMLTestRunner
 # from tomorrow import threads
 
 

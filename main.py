@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -
+import time
 import argparse
-from runcase.envSpecify import EnvSpecify
-from runcase.emailSend import EmailSend
-from runcase.runCase import RunCase
+from common.run.envSpecify import EnvSpecify
+from common.run.emailSend import EmailSend
+from common.run.runCase import RunCase
 
 
 parser = argparse.ArgumentParser()
@@ -12,5 +13,6 @@ parser.add_argument('--name', '-n', help='测试用例名称，必要参数', re
 args = parser.parse_args()
 if __name__ == "__main__":
     EnvSpecify().specify(args.env)
+    time.sleep(1)
     RunCase(args.collection, args.name).run_case()
     # EmailSend().email_send()

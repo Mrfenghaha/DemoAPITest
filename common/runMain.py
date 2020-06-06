@@ -8,9 +8,9 @@ import requests
 import websocket
 from urllib3 import encode_multipart_formdata
 from locust import TaskSet
-from common.readConfig import *
-from common.logger import Log
-from common.loggerLocust import LocustLogger
+from common import *
+from common.log.logger import Log
+from common.log.loggerLocust import LocustLogger
 
 
 # 封装requests请求，将使用到的所有requests请求统一封装调用,并打印美化格式的结果
@@ -56,6 +56,8 @@ class SendRequest:
         new_data = encode_data[0]
         # 执行post请求
         result = requests.post(url=url, headers=new_headers, data=new_data)
+        # 执行封装的打印方法，进行固定格式的结果打印
+        Print(url, data, result).http("post", headers)
         return result
 
     def sendRequest(self, parm):

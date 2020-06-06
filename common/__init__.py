@@ -1,47 +1,68 @@
 # -*- coding: utf-8 -
 import os
-
+import yaml
 cur_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+
+
+class File:
+    def __init__(self, path):
+        self.path = path
+
+    def read_yaml_file(self):
+        with open(self.path, 'r', encoding='utf-8') as file:
+            # 使用load方法将读出的字符串转字典
+            content = yaml.full_load(file)
+            file.close()
+        return content
+
+    def create_yaml_file(self, content):
+        # 判断文件是否存在，不存在则创建，并填写默认值
+        if not os.path.exists(self.path):
+            with open(self.path, 'w', encoding='utf-8') as file:
+                # 写入内容
+                file.write(content)
+            file.close()
+
+    def create_file(self):
+        # 判断文件是否存在，不存在则创建
+        if not os.path.exists(self.path):
+            os.mkdir(self.path)
+
+
+# 测试结果文件存储位置
 result_path = os.path.join(cur_path, "result")
 logs_path = os.path.join(result_path, 'logs')
 logs_locust_path = os.path.join(result_path, 'logsLocust')
 reports_path = os.path.join(result_path, "reports")
-
-# 如果不存在这个result文件夹，就创建一个
-if not os.path.exists(result_path):
-    os.mkdir(result_path)
-# 如果没有result/logs文件夹，就创建一个
-if not os.path.exists(logs_path):
-    os.mkdir(logs_path)
-# 如果没有result/logsLocust文件夹，就创建一个
-if not os.path.exists(logs_locust_path):
-    os.mkdir(logs_locust_path)
-# 如果没有result/reports文件夹，就创建一个
-if not os.path.exists(reports_path):
-    os.mkdir(reports_path)
-
+# 配置文件位置
 config_path = os.path.join(cur_path, 'config')
 env_yaml_path = os.path.join(config_path, 'env.yaml')
 email_yaml_path = os.path.join(config_path, 'email.yaml')
-# 如果没有config文件夹，就创建一个
-if not os.path.exists(config_path):
-    os.mkdir(config_path)  # 创建config文件夹
 
-# 如果没有config/email.yaml,自动创建并写入默认值
-if not os.path.exists(email_yaml_path):
-    with open(email_yaml_path, 'w', encoding='utf-8') as file:
-        file.write("# 邮箱配置\nemail_info:\n"
-                   "  server: xxx.xxx.xxx\n"
-                   "  sender: xxx@xxxxxx.com\n"
-                   "  password: xxxxxx\n"
-                   "  receiver: ['xxx@xxxxxx.com','xxx@xxxxxx.com']")
-    file.close()
+# 判断以上文件夹是否存在，不存在则创建
+for path in [result_path, logs_path, logs_locust_path, reports_path, config_path]:
+    File(path).create_file()
 
+# 配置文件默认值
+email_yaml_content = "# 邮箱配置\nemail_info:\n" \
+                     "  server: xxx.xxx.xxx\n  sender: xxx@xxxxxx.com\n" \
+                     "  password: xxxxxx\n  receiver: ['xxx@xxxxxx.com','xxx@xxxxxx.com']"
+env_yaml_content = "# host环境IP\nhost: http://xxx.xx.x.xx\n" \
+                   "# mysql服务信息\nmysql_info:\n  ip:xxxx\n  port: 3306\n  account: xxxx\n  password: xxxx\n" \
+                   "# mongodb服务信息\nmongodb_info:\n  ip:xxxx\n  port: 3306\n  account: xxxx\n  password: xxxx\n"
 
-# 如果没有config/env.yaml,自动创建并写入默认值
-if not os.path.exists(env_yaml_path):
-    with open(env_yaml_path, 'w', encoding='utf-8') as file:
-        file.write('# host环境IP\nhost: http://xxx.xx.x.xx\n'
-                   '# mysql服务信息\nmysql_info:\n  ip:xxxx\n  port: 3306\n  account: xxxx\n  password: xxxx\n'
-                   '# mongodb服务信息\nmongodb_info:\n  ip:xxxx\n  port: 3306\n  account: xxxx\n  password: xxxx\n')
-    file.close()
+# 判断以上文件夹是否存在，不存在则创建，并且填充默认值
+for content in [email_yaml_content, env_yaml_content]:
+    File(path).create_yaml_file(content)
+
+# 读取配置文件
+email_content = File(email_yaml_path).read_yaml_file()
+env_content = File(env_yaml_path).read_yaml_file()
+# 读取配置文件-邮箱信息
+email_info = email_content['email_info']
+# 读取配置文件-host地址
+host = env_content['host']
+# 读取配置文件-mysql信息
+mysql_info = env_content['mysql_info']
+# 读取配置文件-mongodb信息
+mongodb_info = env_content['mongodb_info']

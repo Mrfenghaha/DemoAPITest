@@ -2,7 +2,7 @@
 import pymysql
 import pymongo
 from urllib import parse
-from common.readConfig import *
+from common import *
 
 
 def execute_mysql(sql):
