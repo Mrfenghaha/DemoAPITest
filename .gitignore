@@ -106,4 +106,3 @@ venv.bak/
 .idea
 */.DS_Store
 result/
-config/env.yaml
