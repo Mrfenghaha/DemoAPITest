@@ -6,7 +6,7 @@
 
 # 框架详细介绍
 
-![](https://github.com/fengyibo963/DemoAPITest/blob/master/docs/%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84.png)
+![](https://github.com/fengyibo963/DemoAPITest/blob/master/docs/%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84.jpg)
 
 ## 用例分层概念介绍
 该框架分层使用BDD理念（参考HttpRunner的分层理念）
@@ -40,8 +40,6 @@ Locust是一个很好用并且使用协程而非进程/线程的工具，大大�
 由于Locust工具的使用简单，只需要测试用例的基础上增加相应的并发设置即可，因此Locust可以直接引用TestCase拼接好的用例
 
 ## 项目结构详细介绍
-
-![](https://github.com/fengyibo963/DemoAPITest/blob/master/docs/%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95.png)
 
 ```
 |-- common      # 基础通用方法，使用过程中基本无需修改（可以二次开发自行拓展）
