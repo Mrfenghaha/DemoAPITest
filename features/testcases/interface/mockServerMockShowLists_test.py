@@ -29,7 +29,7 @@ class Test(unittest.TestCase, SendRequest):
         self.assertEqual(result.json()["error_message"], "param is error, param not filled or type error")
 
     def tearDown(self):
-        pass
+        print('-----end-----')
 
 
 if __name__ == "__main__":

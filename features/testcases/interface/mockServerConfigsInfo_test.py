@@ -21,7 +21,7 @@ class Test(unittest.TestCase, SendRequest):
         self.assertEqual(result.status_code, 200)
 
     def tearDown(self):
-        pass
+        print('-----end-----')
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -
 from locust import HttpLocust, task
 from common.runMain import RunLocust
-from common.readConfig import *
+from common import *
 from features.apis import mockServerConfigsInfo_api, mockServerMockShowLists_api, dbOperationConfigsShowLists_api,\
     dbOperationOperationsShowLists_api
 
