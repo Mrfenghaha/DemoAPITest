@@ -129,12 +129,12 @@ python3 main.py -e St -c api_test -n all
 **执行性能测试**
 * web执行
 ```
-clocust -f tests/testcase/locust/test_mostAPI.py
+locust -f tests/testcase/locust/test_mostAPI.py
 ```
 通过浏览器访问：http://localhost:8089  设置模拟用户数、每秒产生（启动）的虚拟用户数即可开始测试，可通过Ctrl+C关闭服务
 * no-web执行
 ```
-clocust -f tests/testcase/locust/test_mostAPI.py --no-web -c 2 -r 1 -t 3
+locust -f tests/testcase/locust/test_mostAPI.py --no-web -c 2 -r 1 -t 3
 ```
 -c 设置虚拟用户数。
 -r 设置每秒启动虚拟用户数。

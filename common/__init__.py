@@ -2,7 +2,8 @@
 import os
 import yaml
 cur_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-
+import sys
+sys.path
 
 class File:
     def __init__(self, path):
