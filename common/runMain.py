@@ -16,14 +16,20 @@ from common.log.loggerLocust import LocustLogger
 # 封装requests请求，将使用到的所有requests请求统一封装调用,并打印美化格式的结果
 class SendRequest:
 
-    def websocket(self, url, data):
+    def websocket(self, url, Data):
         ws = websocket.create_connection(url, sslopt={"cert_reqs": ssl.CERT_NONE})  # 启动连接
-        ws.send(data)  # 发送请求
-        result = ws.recv()  # 获取返回
+        result_list = []
+        for data in Data:
+            ws.send(data)  # 发送请求
+            result = ws.recv()  # 获取返回
+            result_list.append(result)
+            # 执行封装的打印方法，进行固定格式的结果打印
+            Print(url, data, result).websocket()
         ws.close()  # 关闭连接
-        # 执行封装的打印方法，进行固定格式的结果打印
-        Print(url, data, result).websocket()
-        return result
+        if len(result_list) == 1:
+            return result_list[0]
+        else:
+            return result_list
 
     def http(self, method, url, headers, data):
         if method == "get":
