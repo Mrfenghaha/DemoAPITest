@@ -7,6 +7,7 @@ from common import *
 from common.run.htmlTestRunner import HTMLTestRunner
 from common.run.BeautifulReport import BeautifulReport
 from tomorrow import threads
+gevent.monkey.patch_all()
 
 
 class RunCase:

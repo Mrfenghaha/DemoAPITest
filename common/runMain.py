@@ -11,6 +11,7 @@ from locust import TaskSet
 from common import *
 from common.log.logger import Log
 from common.log.loggerLocust import LocustLogger
+gevent.monkey.patch_all()
 
 
 # 封装requests请求，将使用到的所有requests请求统一封装调用,并打印美化格式的结果
