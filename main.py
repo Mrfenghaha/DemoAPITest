@@ -2,8 +2,6 @@
 import time
 import argparse
 from common.run.envSpecify import EnvSpecify
-from common.run.emailSend import EmailSend
-from common.run.runCase import RunCase
 
 
 parser = argparse.ArgumentParser()
@@ -13,6 +11,15 @@ parser.add_argument('--name', '-n', help='测试用例名称，必要参数', re
 args = parser.parse_args()
 if __name__ == "__main__":
     EnvSpecify().specify(args.env)
-    time.sleep(1)
+    time.sleep(2)
+    # 因为specify修改了env配置文件，需要重新加载common模块，读取环境变量
+    import common
+    from importlib import reload
+
+    reload(common)
+    # 重新加载更新环境变量后，再次调用RunCase类
+    from common.run.runCase import RunCase
+
     RunCase(args.collection, args.name).run_case()
+    # from common.run.emailSend import EmailSend
     # EmailSend().email_send()
