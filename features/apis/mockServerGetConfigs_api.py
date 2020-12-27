@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -
 
 
-def configs_info():
+def get_configs():
 
     request = {
         "url": "/mock_server/get_configs",

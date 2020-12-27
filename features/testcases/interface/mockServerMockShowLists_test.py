@@ -16,7 +16,7 @@ class Test(unittest.TestCase, SendRequest):
         data = DataCreate().data_create()
         # 准备数据
         page, size = data['page'], data['size']
-        result = self.sendRequest(mockServerGetMockList_api.mock_show_lists(page, size))
+        result = self.sendRequest(mockServerGetMockList_api.get_mock_list(page, size))
         self.assertEqual(result.json()["success"], True)
 
     def test_case02(self):
@@ -24,7 +24,7 @@ class Test(unittest.TestCase, SendRequest):
         data = DataCreate().data_create()
         # 准备数据
         page, size = "", data['size']
-        result = self.sendRequest(mockServerGetMockList_api.mock_show_lists(page, size))
+        result = self.sendRequest(mockServerGetMockList_api.get_mock_list(page, size))
         self.assertEqual(result.json()["success"], False)
         self.assertEqual(result.json()["error_message"], "param is error, param not filled or type error")
 

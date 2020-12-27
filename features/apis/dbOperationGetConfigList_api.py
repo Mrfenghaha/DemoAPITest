@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -
 
 
-def configs_show_lists(page, size):
+def get_configs_list(page, size):
     # page：分页的第几页
     # size：每页数量
 

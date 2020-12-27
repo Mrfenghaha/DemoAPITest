@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -
-from locust import HttpLocust, TaskSet, task
+from locust import HttpUser, TaskSet, task
 
 
 # 定义用户行为，继承TaskSet类，用于描述用户行为
@@ -12,7 +12,7 @@ class UserBehavior(TaskSet):
         self.client.get("/")
 
 
-class WebsiteUser(HttpLocust):
+class WebsiteUser(HttpUser):
     # 指向一个定义的用户行为类
     task_set = UserBehavior
     # 执行事务之间用户等待时间的下界（单位：毫秒）

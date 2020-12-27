@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -
 
 
-def operations_show_lists(page, size):
+def get_operation_list(page, size):
     # page：分页的第几页
     # size：每页数量
 

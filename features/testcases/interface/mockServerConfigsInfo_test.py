@@ -12,12 +12,12 @@ class Test(unittest.TestCase, SendRequest):
     # unittest执行测试必须以test开头
     def test_case01(self):
         """测试登录1"""
-        result = self.sendRequest(mockServerGetConfigs_api.configs_info())
+        result = self.sendRequest(mockServerGetConfigs_api.get_configs())
         self.assertEqual(result.status_code, 200)
 
     def test_case02(self):
         """测试登录2"""
-        result = self.sendRequest(mockServerGetConfigs_api.configs_info())
+        result = self.sendRequest(mockServerGetConfigs_api.get_configs())
         self.assertEqual(result.status_code, 200)
 
     def tearDown(self):

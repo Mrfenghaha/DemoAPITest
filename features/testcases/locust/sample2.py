@@ -1,4 +1,4 @@
-from locust import HttpLocust, TaskSet, task
+from locust import HttpUser, TaskSet, task
 
 
 # 定义用户行为
@@ -20,7 +20,7 @@ class UserBehavior(TaskSet):
 
 
 # 用于设置性能测试
-class WebsiteUser(HttpLocust):
+class WebsiteUser(HttpUser):
     # 指向一个定义的用户行为类。
     task_set = UserBehavior
 

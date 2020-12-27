@@ -10,8 +10,8 @@ from urllib3 import encode_multipart_formdata
 from locust import TaskSet
 from common import *
 from common.log.logger import Log
-from common.log.loggerLocust import LocustLogger
-gevent.monkey.patch_all()
+# from common.log.loggerLocust import LocustLogger
+# gevent.monkey.patch_all()
 
 
 # 封装requests请求，将使用到的所有requests请求统一封装调用,并打印美化格式的结果
@@ -84,8 +84,8 @@ class SendRequest:
 
 # 封装locust请求，将使用到的所有locust请求统一封装调用
 class RunLocust(TaskSet):
-    logger = LocustLogger(logs_locust_path, '%s.log' % time.strftime('%Y-%m-%d-%H'))
-    logger.get_locust_Hook()
+    # logger = LocustLogger(logs_locust_path, '%s.log' % time.strftime('%Y-%m-%d-%H'))
+    # logger.get_locust_Hook()
 
     def runLocust(self, parm):
         method = str.lower(parm['method'])  # 请求方式全部转化为小写

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -
-from locust import HttpLocust, TaskSet, task
+from locust import HttpUser, TaskSet, task
 from random import randint
 
 
@@ -26,8 +26,9 @@ class UserBehavior(TaskSet):
         self.client.post("/login_action", {"username": username, "password": password, "user_type": user_type})
 
 
-class User(HttpLocust):
-    task_set = UserBehavior
+class User(HttpUser):
+    task_set = [UserBehavior]
     min_wait = 1000
     max_wait = 3000
+    # abstract = True
     host = 'https://debugtalk.com'
