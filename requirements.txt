@@ -5,6 +5,6 @@ requests
 websocket-client
 locust
 locustio==0.10.0
-gevent==1.5a2
+gevent
 PyMySQL
 pymongo

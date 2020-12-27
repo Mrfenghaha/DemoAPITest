@@ -2,8 +2,8 @@
 from locust import HttpLocust, task
 from common.runMain import RunLocust
 from common import *
-from features.apis import mockServerConfigsInfo_api, mockServerMockShowLists_api, dbOperationConfigsShowLists_api,\
-    dbOperationOperationsShowLists_api
+from features.apis import mockServerGetConfigs_api, mockServerGetMockList_api, dbOperationGetConfigList_api,\
+    dbOperationGetOperationList_api
 
 
 class TestLocust(RunLocust):
@@ -13,12 +13,12 @@ class TestLocust(RunLocust):
 
     @task(3)
     def test_configs_info(self):
-        self.runLocust(mockServerConfigsInfo_api.configs_info())
+        self.runLocust(mockServerGetConfigs_api.configs_info())
 
     @task
     def test_mock_show_lists(self):
         page_num, num = 10, 1
-        self.runLocust(mockServerMockShowLists_api.mock_show_lists(page_num, num))
+        self.runLocust(mockServerGetMockList_api.mock_show_lists(page_num, num))
 
 
 class TestLocust2(RunLocust):
@@ -29,12 +29,12 @@ class TestLocust2(RunLocust):
     @task(5)
     def test_configs_show_lists(self):
         page_num, num = 10, 1
-        self.runLocust(dbOperationConfigsShowLists_api.configs_show_lists(page_num, num))
+        self.runLocust(dbOperationGetConfigList_api.configs_show_lists(page_num, num))
 
     @task
     def test_operations_show_lists(self):
         page_num, num = 10, 1
-        self.runLocust(dbOperationOperationsShowLists_api.operations_show_lists(page_num, num))
+        self.runLocust(dbOperationGetOperationList_api.operations_show_lists(page_num, num))
 
 
 class QueryOne(HttpLocust):
