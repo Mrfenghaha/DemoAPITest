@@ -92,7 +92,6 @@ class SendRequest:
 
     def sendRequest(self, api_name, api_parm):
         parm = self.get_api_json(api_name, api_parm)  # 根据api名称和替换参数，获取完成json
-        print(parm)
         try:
             protocol = str.lower(parm['protocol'])
             if protocol == "websocket":
