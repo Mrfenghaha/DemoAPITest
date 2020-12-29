@@ -1,0 +1,16 @@
+{
+  "mock_server_get_configs":
+    {
+      "url": "/mock_server/get_configs",
+      "method": "get",
+      "headers": {"content-type": "application/json"},
+      "data": {}
+    },
+  "mock_server_get_mock_list":
+    {
+      "url": "/mock_server/get_mock_list?page=$page&size=$size",
+      "method": "get",
+      "headers": {"content-type": "application/json"},
+      "data": {}
+    }
+}

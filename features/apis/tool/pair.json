@@ -1,0 +1,9 @@
+{
+  "pair":
+    {
+      "url": "/tool/pairs",
+      "method": "post",
+      "headers": {"content-type": "application/json"},
+      "data": {"input": "$input"}
+    }
+}

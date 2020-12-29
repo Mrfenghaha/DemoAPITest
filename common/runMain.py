@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -
 import gevent.monkey
 gevent.monkey.patch_all()  # python3.6及以上会因为gevent产生无限递归问题，需要添加此方法解决，需要在引用requests前patch
+import os
 import ssl
 import json
 import time
@@ -67,7 +68,31 @@ class SendRequest:
         Print(url, data, result).http("post", headers)
         return result
 
-    def sendRequest(self, parm):
+    def get_api_json(self, api_name, parm):
+        api_path = os.path.join(cur_path, "features/apis")
+        json_file_list = []
+        for root, dirs, files in os.walk(api_path):
+            for f in files:
+                fi = '%s/%s' % (root, f)  # 获取文件夹下的所有文件路径（包含子文件夹）
+                if fi[-5:] == '.json':  # 找出.json结尾的文件
+                    json_file_list = json_file_list + ['%s/%s' % (root, f)]
+        try:  # 处理api_name不存在情况
+            for json_file in json_file_list:
+                try:  # 根据api_name读取json内容
+                    api_json = json.load(open(json_file, encoding='utf-8'))[api_name]  # 根据api名称获取json
+                    new_api_json = json.dumps(api_json)
+                    for key in parm.keys():  # 获取参数key
+                        new_api_json = new_api_json.replace('"$%s"' % key, json.dumps(parm[key]))
+                        new_api_json = new_api_json.replace('$%s' % key, json.dumps(parm[key]))
+                    return json.loads(new_api_json)
+                except KeyError:
+                    pass
+        except Exception:  # 处理有json文件为空情况
+            print("api名称不存在，请检查")
+
+    def sendRequest(self, api_name, api_parm):
+        parm = self.get_api_json(api_name, api_parm)  # 根据api名称和替换参数，获取完成json
+        print(parm)
         try:
             protocol = str.lower(parm['protocol'])
             if protocol == "websocket":
