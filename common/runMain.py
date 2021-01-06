@@ -33,31 +33,20 @@ class SendRequest:
         else:
             return result_list
 
-    def http(self, method, url, headers, data):
-        if method == "get":
-            result = requests.get(url=url, data=json.dumps(data), headers=headers)
-        elif method == "post":
-            result = requests.post(url=url, data=json.dumps(data), headers=headers)
-        elif method == "post_file":
-            result = self.send_post_file_request(url, headers, data)
-        elif method == "put":
-            result = requests.put(url=url, data=json.dumps(data), headers=headers)
-        elif method == "delete":
-            result = requests.delete(url=url, data=json.dumps(data), headers=headers)
-        elif method == "options":
-            result = requests.options(url=url, data=json.dumps(data), headers=headers)
-        elif method == "head":
-            result = requests.head(url=url, data=json.dumps(data), headers=headers)
-        elif method == "patch":
-            result = requests.patch(url=url, data=json.dumps(data), headers=headers)
+    def http(self, method, url, headers, body):
+        # 发起请求
+        if method == "POST_FILE":
+            result = self.post_file(url, headers, body)
+        elif method in ["GET", "POST", "HEAD", "OPTIONS", "PUT", "DELETE", "PATCH"]:
+            result = requests.request(method=method, url=url, data=json.dumps(body), headers=headers)
         else:
             print("method值错误！！！")
-            quit()
+            return False
         # 执行封装的打印方法，进行固定格式的结果打印
-        Print(url, data, result).http(method, headers)
+        Print(url, body, result).http(method, headers)
         return result
 
-    def send_post_file_request(self, url, headers, data):
+    def post_file(self, url, headers, data):
         # 文件转化为二进制流
         encode_data = encode_multipart_formdata(data)
         new_headers = dict({"content-type": encode_data[1]}, **headers)
@@ -65,7 +54,7 @@ class SendRequest:
         # 执行post请求
         result = requests.post(url=url, headers=new_headers, data=new_data)
         # 执行封装的打印方法，进行固定格式的结果打印
-        Print(url, data, result).http("post", headers)
+        Print(url, data, result).http("POST", headers)
         return result
 
     def get_api_json(self, api_name, parm):
@@ -93,13 +82,13 @@ class SendRequest:
     def sendRequest(self, api_name, api_parm):
         parm = self.get_api_json(api_name, api_parm)  # 根据api名称和替换参数，获取完成json
         try:
-            protocol = str.lower(parm['protocol'])
+            protocol = str.upper(parm['protocol'])
             if protocol == "websocket":
                 url = "wss://%s%s" % (host[parm['url'][0]].split("//")[1], parm['url'][1])
                 data = parm['data']
                 return self.websocket(url, data)
         except:
-            method = str.lower(parm['method'])  # 请求方式全部转化为小写
+            method = str.upper(parm['method'])  # 请求方式全部转化为大写
             url = host + parm['url']
             headers = parm['headers']
             data = parm['data']
@@ -145,10 +134,10 @@ class RunLocust(TaskSet):
 # 配置打印格式即美化、打印内容,同时完整的结果输出有利于报告的详细程度(就不再需要打log,报告内容是根据执行结果完成的)
 class Print:
     # 构造函数，类接收外部传入参数全靠构造函数
-    def __init__(self, url, data, response):
+    def __init__(self, url, body, response):
         self.log = Log(logs_path, '%s.log' % time.strftime('%Y-%m-%d'))
         self.url = url
-        self.request_body = data
+        self.request_body = body
         self.response = response
 
     def http(self, method, headers):
