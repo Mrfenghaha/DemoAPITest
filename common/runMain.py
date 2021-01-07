@@ -65,34 +65,40 @@ class SendRequest:
                 fi = '%s/%s' % (root, f)  # 获取文件夹下的所有文件路径（包含子文件夹）
                 if fi[-5:] == '.json':  # 找出.json结尾的文件
                     json_file_list = json_file_list + ['%s/%s' % (root, f)]
-        try:  # 处理api_name不存在情况
-            for json_file in json_file_list:
-                try:  # 根据api_name读取json内容
-                    api_json = json.load(open(json_file, encoding='utf-8'))[api_name]  # 根据api名称获取json
-                    new_api_json = json.dumps(api_json)
-                    for key in parm.keys():  # 获取参数key
-                        new_api_json = new_api_json.replace('"$%s"' % key, json.dumps(parm[key]))
-                        new_api_json = new_api_json.replace('$%s' % key, json.dumps(parm[key]))
-                    return json.loads(new_api_json)
-                except KeyError:
+
+        num = 0
+        for json_file in json_file_list:
+            num += 1
+            try:  # 根据api_name读取json内容
+                api_json = json.load(open(json_file, encoding='utf-8'))[api_name]  # 根据api名称获取json
+                new_api_json = json.dumps(api_json)
+                for key in parm.keys():  # 获取参数key
+                    new_api_json = new_api_json.replace('"$%s"' % key, json.dumps(parm[key]))
+                    new_api_json = new_api_json.replace('$%s' % key, json.dumps(parm[key]))
+                return json.loads(new_api_json)
+            except KeyError:
+                if num == len(json_file_list):
+                    return False  # 如果循环到最后一个还未找到则返回false
+                else:
                     pass
-        except Exception:  # 处理有json文件为空情况
-            print("api名称不存在，请检查")
 
     def sendRequest(self, api_name, api_parm):
         parm = self.get_api_json(api_name, api_parm)  # 根据api名称和替换参数，获取完成json
-        try:
-            protocol = str.upper(parm['protocol'])
-            if protocol == "websocket":
-                url = "wss://%s%s" % (host[parm['url'][0]].split("//")[1], parm['url'][1])
+        if parm is False:
+            print("错误: 接口%s不存在，请检查" % api_name)
+        else:
+            try:
+                protocol = str.upper(parm['protocol'])
+                if protocol == "websocket":
+                    url = "wss://%s%s" % (host[parm['url'][0]].split("//")[1], parm['url'][1])
+                    data = parm['data']
+                    return self.websocket(url, data)
+            except KeyError:
+                method = str.upper(parm['method'])  # 请求方式全部转化为大写
+                url = host + parm['url']
+                headers = parm['headers']
                 data = parm['data']
-                return self.websocket(url, data)
-        except:
-            method = str.upper(parm['method'])  # 请求方式全部转化为大写
-            url = host + parm['url']
-            headers = parm['headers']
-            data = parm['data']
-            return self.http(method, url, headers, data)
+                return self.http(method, url, headers, data)
 
 
 # 封装locust请求，将使用到的所有locust请求统一封装调用
