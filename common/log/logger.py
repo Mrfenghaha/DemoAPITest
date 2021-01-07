@@ -8,7 +8,7 @@ class Log:
         # 文件的命名
         self.log_name = os.path.join(path, name)
         self.logger = logging.getLogger()
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)
         # 日志输出格式
         # self.formatter = logging.Formatter('%(asctime)s - %(filename)s - %(levelname)s: \n%(message)s')
         self.formatter = logging.Formatter('%(asctime)s | %(name)s | %(message)s')
@@ -17,13 +17,13 @@ class Log:
         # 创建一个FileHandler，用于写到本地
         # fh = logging.FileHandler(self.log_name, 'a')  # 追加模式  这个是python2的
         fh = logging.FileHandler(self.log_name, 'a', encoding='utf-8')  # 这个是python3的
-        fh.setLevel(logging.DEBUG)
+        fh.setLevel(logging.INFO)
         fh.setFormatter(self.formatter)
         self.logger.addHandler(fh)
 
         # 创建一个StreamHandler,用于输出到控制台
         ch = logging.StreamHandler()
-        ch.setLevel(logging.DEBUG)
+        ch.setLevel(logging.INFO)
         ch.setFormatter(self.formatter)
         self.logger.addHandler(ch)
 

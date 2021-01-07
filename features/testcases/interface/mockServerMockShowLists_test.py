@@ -16,8 +16,8 @@ class Test(unittest.TestCase, SendRequest):
         # 准备数据
         page, size = data['page'], data['size']
         result = self.sendRequest("mock_server_get_mock_list", {"page": page, "size": size})
-        self.assertEqual(result.status_code, 200)
-        self.assertEqual(result.json()["success"], True)
+        self.assertEqual(result['code'], 200)
+        self.assertEqual(result['body']["success"], True)
 
     def test_case02(self):
         """异常数据-空"""
@@ -25,8 +25,8 @@ class Test(unittest.TestCase, SendRequest):
         # 准备数据
         size = data['size']
         result = self.sendRequest("mock_server_get_mock_list", {"size": size})
-        self.assertEqual(result.json()["success"], False)
-        self.assertEqual(result.json()["error_message"], "param is error, param not filled or type error")
+        self.assertEqual(result['body']["success"], False)
+        self.assertEqual(result['body']["error_message"], "param is error, param not filled or type error")
 
     def test_case03(self):
         """异常数据-null"""
@@ -34,8 +34,8 @@ class Test(unittest.TestCase, SendRequest):
         # 准备数据
         page, size = None, data['size']
         result = self.sendRequest("mock_server_get_mock_list", {"page": page, "size": size})
-        self.assertEqual(result.json()["success"], False)
-        self.assertEqual(result.json()["error_message"], "param is error, param not filled or type error")
+        self.assertEqual(result['body']["success"], False)
+        self.assertEqual(result['body']["error_message"], "param is error, param not filled or type error")
 
     def tearDown(self):
         print('-----end-----')

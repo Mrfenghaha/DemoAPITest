@@ -3,13 +3,18 @@
     {
       "url": "/mock_server/get_configs",
       "method": "get",
+      "params": {},
       "headers": {"content-type": "application/json"},
       "data": {}
     },
   "mock_server_get_mock_list":
     {
-      "url": "/mock_server/get_mock_list?page=$page&size=$size",
+      "url": "/mock_server/get_mock_list",
       "method": "get",
+      "params": {
+        "page": "$page",
+        "size": "$size"
+      },
       "headers": {"content-type": "application/json"},
       "data": {}
     }

@@ -11,8 +11,9 @@ class Test(unittest.TestCase, SendRequest):
     # unittest执行测试必须以test开头
     def test_case01(self):
         """测试1"""
-        result = self.sendRequest("mock_server_get_configs", {})
-        self.assertEqual(result.status_code, 200)
+        parm = {}
+        check = [{"code": ("assertEqual", 200)}, {"body/data/methods": ("assertIn", "GET")}]
+        self.sendRequest("mock_server_get_configs", parm, check)
 
     def tearDown(self):
         print('-----end-----')
