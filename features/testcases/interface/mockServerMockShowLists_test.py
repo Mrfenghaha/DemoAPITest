@@ -12,30 +12,26 @@ class Test(unittest.TestCase, SendRequest):
     # unittest执行测试必须以test开头
     def test_case01(self):
         """正常数据"""
-        data = DataCreate().data_create()
         # 准备数据
-        page, size = data['page'], data['size']
-        result = self.sendRequest("mock_server_get_mock_list", {"page": page, "size": size})
-        self.assertEqual(result['code'], 200)
-        self.assertEqual(result['body']["success"], True)
+        parm = {"page": 1, "size": 10}
+        check = [{'code': ('assertEqual', 200)}, {'body/success': ('assertEqual', True)}]
+        self.sendRequest("mock_server_get_mock_list", parm, check)
 
     def test_case02(self):
         """异常数据-空"""
-        data = DataCreate().data_create()
         # 准备数据
-        size = data['size']
-        result = self.sendRequest("mock_server_get_mock_list", {"size": size})
-        self.assertEqual(result['body']["success"], False)
-        self.assertEqual(result['body']["error_message"], "param is error, param not filled or type error")
+        parm = {"size": 10}
+        check = [{'code': ('assertEqual', 403)}, {'body/success': ('assertEqual', False)},
+                 {'body/error_message': ('assertEqual', "param is error, param not filled or type error")}]
+        self.sendRequest("mock_server_get_mock_list", parm, check)
 
     def test_case03(self):
         """异常数据-null"""
-        data = DataCreate().data_create()
         # 准备数据
-        page, size = None, data['size']
-        result = self.sendRequest("mock_server_get_mock_list", {"page": page, "size": size})
-        self.assertEqual(result['body']["success"], False)
-        self.assertEqual(result['body']["error_message"], "param is error, param not filled or type error")
+        parm = {"page": None, "size": 10}
+        check = [{'code': ('assertEqual', 403)}, {'body/success': ('assertEqual', False)},
+                 {'body/error_message': ('assertEqual', "param is error, param not filled or type error")}]
+        self.sendRequest("mock_server_get_mock_list", parm, check)
 
     def tearDown(self):
         print('-----end-----')
