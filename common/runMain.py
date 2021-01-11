@@ -130,7 +130,7 @@ class SendRequest():
                 elif checkpoint[key][0] == "false":
                     unittest.TestCase().assertFalse(resp, msg="%s值为%s，为真" % (key, resp))
                 else:
-                    print("检查点方式%s暂不支持" % checkpoint[key][0])
+                    unittest.TestCase().assertTrue(False, msg="检查点对比方式错误，或当前不支持该方式")
 
     def sendRequest(self, api_name, api_parm, *check):
         parm = self.get_api_json(api_name, api_parm)  # 根据api名称和替换参数，获取完成json
