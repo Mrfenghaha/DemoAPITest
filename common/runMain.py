@@ -74,11 +74,24 @@ class SendRequest():
             try:  # 根据api_name读取json内容
                 file_info = open(json_file, encoding='utf-8')
                 api_json = json.load(file_info)[api_name]  # 根据api名称获取json
-                new_api_json = json.dumps(api_json)
+                file_info.close()  # 关闭文件读取
+                new_api_json = json.dumps(api_json)  # 将json转为str，用于字符替换
                 for key in parm.keys():  # 获取参数key
-                    new_api_json = new_api_json.replace('"$%s"' % key, json.dumps(parm[key]))
-                    new_api_json = new_api_json.replace('$%s' % key, json.dumps(parm[key]))
-                file_info.close()
+                    new_api_json = new_api_json.replace('"$%s"' % key, json.dumps(parm[key]))  # 找到"$%s"进行替换
+                    new_api_json = new_api_json.replace('$%s' % key, json.dumps(parm[key]))  # 找到$%s进行替换
+                    # 下述方法为替换json中指定的key对应的value值（方法比较笨，如果有更好的方法可以替换）
+                    try:
+                        new_api_json = json.loads(new_api_json)  # json转为字典
+                        dict_path = key.split('/')  # 根据传入key获取路径
+                        if len(dict_path) == 1:
+                            pass  # 防止有同学参数化名称为url、body、params、method、headers，json文件中整块被误替换，顾只有xx/xx格式名称被视为字典路径替换
+                        elif len(dict_path) == 2:
+                            new_api_json[dict_path[0]][dict_path[1]] = parm[key]
+                        elif len(dict_path) == 3:
+                            new_api_json[dict_path[0]][dict_path[1]][dict_path[2]] = parm[key]
+                        new_api_json = json.dumps(new_api_json)  # 重新将json转给str类型，用于后续参数的替换
+                    except KeyError:
+                        pass
                 return json.loads(new_api_json)
             except KeyError as error:
                 if num == len(json_file_list):
@@ -92,14 +105,30 @@ class SendRequest():
                 resp = response
                 for res in key.split('/'):
                     resp = resp[res]
-                if checkpoint[key][0] == "assertEqual":
-                    unittest.TestCase().assertEqual(resp, checkpoint[key][1], msg="%s与%s不相等")
-                elif checkpoint[key][0] == "assertNotEqual":
-                    unittest.TestCase().assertNotEqual(resp, checkpoint[key][1], msg="%s与%s相等")
-                elif checkpoint[key][0] == "assertIn":
-                    unittest.TestCase().assertIn(checkpoint[key][1], resp, msg="%s不包含%s" % (resp, checkpoint[key][1]))
-                elif checkpoint[key][0] == "assertNotIn":
-                    unittest.TestCase().assertNotIn(checkpoint[key][1], resp, msg="%s包含%s" % (resp, checkpoint[key][1]))
+                if checkpoint[key][0] == "=":
+                    unittest.TestCase().assertEqual(resp, checkpoint[key][1], msg="%s值为%s，不等于%s" % (key, resp, checkpoint[key][1]))
+                elif checkpoint[key][0] == "!=":
+                    unittest.TestCase().assertNotEqual(resp, checkpoint[key][1], msg="%s值为%s，等于%s" % (key, resp, checkpoint[key][1]))
+                elif checkpoint[key][0] == ">":
+                    unittest.TestCase().assertTrue(resp > checkpoint[key][1], msg="%s值为%s，不大于%s" % (key, resp, checkpoint[key][1]))
+                elif checkpoint[key][0] == "<":
+                    unittest.TestCase().assertTrue(resp < checkpoint[key][1], msg="%s值为%s，不小于%s" % (key, resp, checkpoint[key][1]))
+                elif checkpoint[key][0] == ">=":
+                    unittest.TestCase().assertTrue(resp >= checkpoint[key][1], msg="%s值为%s，不大于等于%s" % (key, resp, checkpoint[key][1]))
+                elif checkpoint[key][0] == "<=":
+                    unittest.TestCase().assertTrue(resp <= checkpoint[key][1], msg="%s值为%s，不小于等于%s" % (key, resp, checkpoint[key][1]))
+                elif checkpoint[key][0] == "in":
+                    unittest.TestCase().assertTrue(checkpoint[key][1] in resp, msg="%s值为%s，不包含%s" % (key, resp, checkpoint[key][1]))
+                elif checkpoint[key][0] == "not-in":
+                    unittest.TestCase().assertTrue(checkpoint[key][1] not in resp, msg="%s值为%s，包含%s" % (key, resp, checkpoint[key][1]))
+                elif checkpoint[key][0] == "none":
+                    unittest.TestCase().assertIsNone(resp, msg="%s值为%s，不为空" % (key, resp))
+                elif checkpoint[key][0] == "not-none":
+                    unittest.TestCase().assertIsNotNone(resp, msg="%s值为%s，为空" % (key, resp))
+                elif checkpoint[key][0] == "true":
+                    unittest.TestCase().assertTrue(resp, msg="%s值为%s，不为真" % (key, resp))
+                elif checkpoint[key][0] == "false":
+                    unittest.TestCase().assertFalse(resp, msg="%s值为%s，为真" % (key, resp))
 
     def sendRequest(self, api_name, api_parm, *check):
         parm = self.get_api_json(api_name, api_parm)  # 根据api名称和替换参数，获取完成json

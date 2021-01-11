@@ -14,14 +14,14 @@ class Test(unittest.TestCase, SendRequest):
         """正常数据"""
         # 准备数据
         parm = {"page": 1, "size": 10}
-        check = [{'code': ('assertEqual', 200)}, {'body/success': ('assertEqual', True)}]
+        check = [{'code': ('=', 200)}, {'body/success': ('=', True)}]
         self.sendRequest("mock_server_get_mock_list", parm, check)
 
     def test_case02(self):
         """异常数据-空"""
         # 准备数据
         parm = {"size": 10}
-        check = [{'code': ('assertEqual', 403)}, {'body/success': ('assertEqual', False)},
+        check = [{'code': ('=', 403)}, {'body/success': ('=', False)},
                  {'body/error_message': ('assertEqual', "param is error, param not filled or type error")}]
         self.sendRequest("mock_server_get_mock_list", parm, check)
 
@@ -29,7 +29,7 @@ class Test(unittest.TestCase, SendRequest):
         """异常数据-null"""
         # 准备数据
         parm = {"page": None, "size": 10}
-        check = [{'code': ('assertEqual', 403)}, {'body/success': ('assertEqual', False)},
+        check = [{'code': ('=', 403)}, {'body/success': ('=', False)},
                  {'body/error_message': ('assertEqual', "param is error, param not filled or type error")}]
         self.sendRequest("mock_server_get_mock_list", parm, check)
 
