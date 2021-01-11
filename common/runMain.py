@@ -105,32 +105,33 @@ class SendRequest():
                 resp = response
                 for res in key.split('/'):
                     resp = resp[res]
+                check = unittest.TestCase()
                 if checkpoint[key][0] == "=":
-                    unittest.TestCase().assertEqual(resp, checkpoint[key][1], msg="%s值为%s，不等于%s" % (key, resp, checkpoint[key][1]))
+                    check.assertEqual(resp, checkpoint[key][1], msg="%s值为%s，不等于%s" % (key, resp, checkpoint[key][1]))
                 elif checkpoint[key][0] == "!=":
-                    unittest.TestCase().assertNotEqual(resp, checkpoint[key][1], msg="%s值为%s，等于%s" % (key, resp, checkpoint[key][1]))
+                    check.assertNotEqual(resp, checkpoint[key][1], msg="%s值为%s，等于%s" % (key, resp, checkpoint[key][1]))
                 elif checkpoint[key][0] == ">":
-                    unittest.TestCase().assertTrue(resp > checkpoint[key][1], msg="%s值为%s，不大于%s" % (key, resp, checkpoint[key][1]))
+                    check.assertTrue(resp > checkpoint[key][1], msg="%s值为%s，不大于%s" % (key, resp, checkpoint[key][1]))
                 elif checkpoint[key][0] == "<":
-                    unittest.TestCase().assertTrue(resp < checkpoint[key][1], msg="%s值为%s，不小于%s" % (key, resp, checkpoint[key][1]))
+                    check.assertTrue(resp < checkpoint[key][1], msg="%s值为%s，不小于%s" % (key, resp, checkpoint[key][1]))
                 elif checkpoint[key][0] == ">=":
-                    unittest.TestCase().assertTrue(resp >= checkpoint[key][1], msg="%s值为%s，不大于等于%s" % (key, resp, checkpoint[key][1]))
+                    check.assertTrue(resp >= checkpoint[key][1], msg="%s值为%s，不大于等于%s" % (key, resp, checkpoint[key][1]))
                 elif checkpoint[key][0] == "<=":
-                    unittest.TestCase().assertTrue(resp <= checkpoint[key][1], msg="%s值为%s，不小于等于%s" % (key, resp, checkpoint[key][1]))
+                    check.assertTrue(resp <= checkpoint[key][1], msg="%s值为%s，不小于等于%s" % (key, resp, checkpoint[key][1]))
                 elif checkpoint[key][0] == "in":
-                    unittest.TestCase().assertTrue(checkpoint[key][1] in resp, msg="%s值为%s，不包含%s" % (key, resp, checkpoint[key][1]))
+                    check.assertTrue(checkpoint[key][1] in resp, msg="%s值为%s，不包含%s" % (key, resp, checkpoint[key][1]))
                 elif checkpoint[key][0] == "not-in":
-                    unittest.TestCase().assertTrue(checkpoint[key][1] not in resp, msg="%s值为%s，包含%s" % (key, resp, checkpoint[key][1]))
+                    check.assertTrue(checkpoint[key][1] not in resp, msg="%s值为%s，包含%s" % (key, resp, checkpoint[key][1]))
                 elif checkpoint[key][0] == "none":
-                    unittest.TestCase().assertIsNone(resp, msg="%s值为%s，不为空" % (key, resp))
+                    check.assertIsNone(resp, msg="%s值为%s，不为空" % (key, resp))
                 elif checkpoint[key][0] == "not-none":
-                    unittest.TestCase().assertIsNotNone(resp, msg="%s值为%s，为空" % (key, resp))
+                    check.assertIsNotNone(resp, msg="%s值为%s，为空" % (key, resp))
                 elif checkpoint[key][0] == "true":
-                    unittest.TestCase().assertTrue(resp, msg="%s值为%s，不为真" % (key, resp))
+                    check.assertTrue(resp, msg="%s值为%s，不为真" % (key, resp))
                 elif checkpoint[key][0] == "false":
-                    unittest.TestCase().assertFalse(resp, msg="%s值为%s，为真" % (key, resp))
+                    check.assertFalse(resp, msg="%s值为%s，为真" % (key, resp))
                 else:
-                    unittest.TestCase().assertTrue(False, msg="检查点对比方式错误，或当前不支持该方式")
+                    check.assertTrue(False, msg="检查点对比方式错误，或当前不支持该方式")
 
     def sendRequest(self, api_name, api_parm, *check):
         parm = self.get_api_json(api_name, api_parm)  # 根据api名称和替换参数，获取完成json
