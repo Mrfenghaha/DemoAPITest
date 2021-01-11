@@ -22,7 +22,7 @@ class Test(unittest.TestCase, SendRequest):
         # 准备数据
         parm = {"size": 10}
         check = [{'code': ('=', 403)}, {'body/success': ('=', False)},
-                 {'body/error_message': ('assertEqual', "param is error, param not filled or type error")}]
+                 {'body/error_message': ('=', "param is error, param not filled or type error")}]
         self.sendRequest("mock_server_get_mock_list", parm, check)
 
     def test_case03(self):
@@ -30,7 +30,7 @@ class Test(unittest.TestCase, SendRequest):
         # 准备数据
         parm = {"page": None, "size": 10}
         check = [{'code': ('=', 403)}, {'body/success': ('=', False)},
-                 {'body/error_message': ('assertEqual', "param is error, param not filled or type error")}]
+                 {'body/error_message': ('=', "param is error, param not filled or type error")}]
         self.sendRequest("mock_server_get_mock_list", parm, check)
 
     def tearDown(self):

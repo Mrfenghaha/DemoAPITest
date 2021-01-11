@@ -12,7 +12,7 @@ class Test(unittest.TestCase, SendRequest):
     def test_case01(self):
         """测试1"""
         parm = {}
-        check = [{"code": ("assertEqual", 200)}, {"body/data/methods": ("assertIn", "GET")}]
+        check = [{"code": ("=", 200)}, {"body/data/methods": ("in", "GET")}]
         self.sendRequest("mock_server_get_configs", parm, check)
 
     def tearDown(self):
