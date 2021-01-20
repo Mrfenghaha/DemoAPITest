@@ -1,0 +1,18 @@
+db_operation_get_configs_list:
+  url: '/db_operation/get_config_list'
+  method: 'get'
+  params:
+    page: $page
+    size: $size
+  headers:
+    content-type: 'application/json'
+  data: {}
+db_operation_get_operation_list:
+  url: '/db_operation/get_operation_list'
+  method: 'get'
+  params:
+    page: $page
+    size: $size
+  headers:
+    content-type: 'application/json'
+  data: {}

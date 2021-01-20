@@ -4,6 +4,7 @@ gevent.monkey.patch_all()  # python3.6及以上会因为gevent产生无限递归
 import os
 import ssl
 import json
+import yaml
 import time
 import unittest
 import requests
@@ -65,16 +66,20 @@ class SendRequest():
         for root, dirs, files in os.walk(api_path):
             for f in files:
                 fi = '%s/%s' % (root, f)  # 获取文件夹下的所有文件路径（包含子文件夹）
-                if fi[-5:] == '.json':  # 找出.json结尾的文件
+                if fi[-5:] == '.json' or fi[-5:] == '.yaml':  # 找出.json结尾的文件
                     json_file_list = json_file_list + ['%s/%s' % (root, f)]
 
         num = 0
         for json_file in json_file_list:
             num += 1
             try:  # 根据api_name读取json内容
-                file_info = open(json_file, encoding='utf-8')
-                api_json = json.load(file_info)[api_name]  # 根据api名称获取json
-                file_info.close()  # 关闭文件读取
+                with open(json_file, 'r', encoding='utf-8') as file:
+                    if json_file[-5:] == '.json':
+                        api_json = json.load(file)[api_name]  # 根据api名称获取json
+                    elif json_file[-5:] == '.yaml':
+                        api_json = yaml.full_load(file)[api_name]  # 根据api名称获取json
+                    file.close()  # 关闭文件读取
+
                 new_api_json = json.dumps(api_json)  # 将json转为str，用于字符替换
                 for key in parm.keys():  # 获取参数key
                     new_api_json = new_api_json.replace('"$%s"' % key, json.dumps(parm[key]))  # 找到"$%s"进行替换
