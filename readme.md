@@ -58,11 +58,9 @@ Locust是一个很好用并且使用协程而非进程/线程的工具，大大�
 |    -- env.yaml  # 环境变量
 |    -- envDev.yaml  # 开发环境配置文件，可以根据自己需要添加删除
 |    -- envSt.yaml  # 测试环境配置文件，可以根据自己需要添加删除
-|-- data
-|    -- dataCreate  # 测试数据生成
-|        -- xxxx.py  # 某些特殊数据的生成
-|    -- dbOperation  # 数据库数据操作  
-|        -- xxxx.py  # 某些数据库操作的封装
+|-- databases
+|    -- xxxx.py  # 某些数据库操作的封装
+|    -- pubilc.py  # 数据库链接的基础
 |-- docs
 |-- result
 |    -- logs   # 生成的log文件存储位置
@@ -70,9 +68,9 @@ Locust是一个很好用并且使用协程而非进程/线程的工具，大大�
 |    -- reports     # 生成的测试报告存储位置
 |-- features
 |    -- api
-|        -- xxxx_api.py  # 该产品某一接口(一个接口一个文件)
+|        -- xxxx.yaml  # 该产品某一接口(一个接口一个文件)
 |    -- suites
-|        -- xxxx_suite.py  # 该产品通用封装的模块
+|        -- xxxx.py  # 该产品通用封装的模块
 |    -- testcases
 |        -- func  # 某产品线功能逻辑测试用例
 |        -- interface  # 某产品api测试用例
@@ -80,6 +78,8 @@ Locust是一个很好用并且使用协程而非进程/线程的工具，大大�
 |            -- xxx_test.py  # 测试用例文件
 |    -- locust
 |        -- xxxx_test.py  # 性能测试脚本文件
+|    -- data.py  # 通用方数据生成文件
+|    -- function.py  # 通用方法的文件
 |-- main.py    # 自动化框架执行入口
 |-- requirements.txt    # 该文件记录所有需要用的框架（以便更换环境一键安装）
 ```
@@ -129,7 +129,7 @@ python3 main.py -e St -c api_test -n all
 **执行性能测试**
 * web执行
 ```
-locust -f tests/testcase/locust/test_mostAPI.py
+locust -f features/testcase/locust/mostAPI_test.py
 ```
 通过浏览器访问：http://localhost:8089  设置模拟用户数、每秒产生（启动）的虚拟用户数即可开始测试，可通过Ctrl+C关闭服务
 * no-web执行

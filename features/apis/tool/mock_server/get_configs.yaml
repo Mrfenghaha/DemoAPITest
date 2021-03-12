@@ -1,0 +1,6 @@
+url: "/tool/mock_server/get_configs"
+method: "get"
+params:
+headers:
+  content-type: "application/json"
+body:

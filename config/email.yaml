@@ -1,6 +1,5 @@
 # 邮箱配置
-email_info:
-  server: xxx.xxx.xxx
-  sender: xxx@xxxxxx.com
-  password: xxxxxx
-  receiver: ['xxx@xxxxxx.com','xxx@xxxxxx.com']
+server: xxx.xxx.xxx
+sender: xxx@xxxxxx.com
+password: xxxxxx
+receiver: ['xxx@xxxxxx.com','xxx@xxxxxx.com']

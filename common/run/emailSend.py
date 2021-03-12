@@ -9,8 +9,7 @@ from common import *
 class EmailSend:
     def get_new_report(self):
         # ======查找测试目录，找到最新生成的测试报告文件======
-        cur_path = os.path.dirname(os.path.realpath(__file__))
-        test_report = os.path.join(os.path.dirname(cur_path), 'reports')
+        test_report = os.path.join(cur_path, 'result', 'reports')
         lists = os.listdir(test_report)  # 列出目录的下所有文件和文件夹保存到lists
         lists.sort(key=lambda fn: os.path.getmtime(test_report + "/" + fn))  # 按时间排序
         print(('最新的文件是：' + lists[-1]))
@@ -26,10 +25,10 @@ class EmailSend:
         mail_body = f.read()
         f.close()
 
-        email_sender = email_info['email_sender']
-        email_receiver = email_info['email_receiver']
-        email_server = email_info['email_server']
-        email_password = email_info['email_password']
+        email_sender = email['sender']
+        email_receiver = email['receiver']
+        email_server = email['server']
+        email_password = email['password']
 
         msg = MIMEText(mail_body, 'html', 'utf-8')
         msg['From'] = email_sender

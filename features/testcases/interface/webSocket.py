@@ -3,7 +3,7 @@ import unittest
 from common.runMain import SendRequest
 
 
-class Test(unittest.TestCase, SendRequest):
+class Test(SendRequest):
 
     def setUp(self):
         print('-----start-----')
@@ -11,9 +11,8 @@ class Test(unittest.TestCase, SendRequest):
     # unittest执行测试必须以test开头
     def test_case01(self):
         """测试1"""
-        parm = {"page": 1, "size": 10}
-        check = [{"code": ("=", 200)}]
-        self.sendRequest("db_operation_get_configs_list", parm, check)
+        parm = {"token": '', "sid": ''}
+        self.sendRequest(mode='websocket', name="websocket", parm=parm)
 
     def tearDown(self):
         print('-----end-----')

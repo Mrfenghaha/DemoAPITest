@@ -1,0 +1,7 @@
+url: "/tool/pairs"
+method: "post"
+params:
+headers:
+  content-type: "application/json"
+body:
+  input: "$input"

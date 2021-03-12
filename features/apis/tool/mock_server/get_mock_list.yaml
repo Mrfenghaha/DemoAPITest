@@ -1,0 +1,8 @@
+url: "/tool/mock_server/get_mock_list"
+method: "get"
+params:
+  page: "$page"
+  size: "$size"
+headers:
+  content-type: "application/json"
+body:

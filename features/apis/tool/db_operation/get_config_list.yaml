@@ -1,0 +1,8 @@
+url: '/tool/db_operation/get_config_list'
+method: 'get'
+params:
+  page: $page
+  size: $size
+headers:
+  content-type: 'application/json'
+body:

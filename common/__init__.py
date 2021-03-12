@@ -60,13 +60,5 @@ for file in yaml_file:
     File(file['path']).create_yaml_file(file['content'])
 
 # 读取配置文件
-email_content = File(email_yaml_path).read_yaml_file()
-env_content = File(env_yaml_path).read_yaml_file()
-# 读取配置文件-邮箱信息
-email_info = email_content['email_info']
-# 读取配置文件-host地址
-host = env_content['host']
-# 读取配置文件-mysql信息
-mysql_info = env_content['mysql_info']
-# 读取配置文件-mongodb信息
-mongodb_info = env_content['mongodb_info']
+email = File(email_yaml_path).read_yaml_file()
+env = File(env_yaml_path).read_yaml_file()

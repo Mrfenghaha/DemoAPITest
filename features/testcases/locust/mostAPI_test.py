@@ -14,8 +14,8 @@ class TestLocust(RunLocust):
 
     @task
     def test_demo_post(self):
-        page_num, num = 10, 1
-        self.runLocust(mockServerGetMockList_api.get_mock_list(page_num, num))
+        parm = {"page": 1, "size": 10}
+        self.runLocust(name='tool/mock_server/get_mock_list', parm=parm)
         self.runLocust(mockServerGetConfigs_api.get_configs())
         # self.logger.get_requests_log(method='GET', path='/', requests={}, response=resp.json())
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -
-from data.dbOperation.delete import *
+from databases.delete import *
 
 
 class DBOperation:

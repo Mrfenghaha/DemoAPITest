@@ -3,6 +3,8 @@ import pymysql
 import pymongo
 from urllib import parse
 from common import *
+mysql_info = env['mysql_info']
+mongodb_info = env['mongodb_info']
 
 
 def execute_mysql(sql):

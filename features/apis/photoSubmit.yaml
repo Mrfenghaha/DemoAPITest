@@ -1,0 +1,6 @@
+url: "/apis/photo_submit"
+method: "post"
+headers:
+  token: $token
+body:
+  upload:

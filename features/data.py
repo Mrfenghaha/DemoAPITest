@@ -3,9 +3,7 @@ import pytz
 import time
 import datetime
 
-
-def custom():
-    a = {
+custom_data = {
         "page": 1,
         "size": 10,
         "now_time": datetime.datetime.now(),  # 当前时间
@@ -14,5 +12,3 @@ def custom():
         "phone": str(round(time.time() * 1000))[4:13],  # 由时间戳号生成的手机
         "password": "password"
     }
-
-    return a

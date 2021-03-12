@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -
-from features.apis import mockServerGetMockList_api
+import unittest
+from common.runMain import SendRequest
 
 
-def suite_post(data):
-    page_num, num = data['page_num'], data['num']
+class Suite(SendRequest):
+    def suite(self):
+        page, size = self.data['page'], self.data['size']
 
-    # 发起登录
-    login = mockServerGetMockList_api.mock_show_lists(page_num, num)
-    return login
+        # 发起登录
+        parm = {"page": page, "size": size}
+        result = self.sendRequest(name="tool/mock_server/get_mock_list", parm=parm)
+        return result
